@@ -1,0 +1,111 @@
+@extends('layouts.master')
+ 
+@section('content')
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ 
+<div class="page-wrapper">
+    <div class="container-fluid mt-4">
+        @if (session('success'))
+            <div id="success-alert" class="alert alert-success mt-3">
+                {{ session('success') }}
+            </div>
+        @elseif (session('error'))
+            <div id="error-alert" class="alert alert-danger mt-3">
+                {{ session('error') }}
+            </div>
+        @endif
+ 
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <div class="card-title mb-0">
+                <h3 id="all" class="main-heading">Edit Reimbursement<span>Update your reimbursement request</span></h3>
+            </div>
+        </div>
+ 
+        <div class="mt-4 card shadow-sm p-3">
+            <form action="{{ route('reimburs.update', $reimburs->id) }}" method="POST">
+                @csrf
+                @method('PUT')
+ 
+                @php
+                    use Illuminate\Support\Facades\Auth;
+ 
+                    $user = Auth::user();
+                    $isAdmin = $user->role_name === 'Admin';
+                    $employee = App\Models\Employee::where('employee_id', $user->id)->first();
+                @endphp
+ 
+                <div class="form-group">
+                    <label for="employee_id">For Employee:</label>
+ 
+                    @if ($isAdmin)
+                        <select name="employee_id" id="employee_id" class="form-control">
+                            <option value="">-- Select Employee --</option>
+                            @foreach ($employees as $emp)
+                                <option value="{{ $emp->id }}" {{ $reimburs->employee_id == $emp->id ? 'selected' : '' }}>
+                                    {{ $emp->first_name . ' ' . $emp->last_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    @else
+                        <select name="employee_id" id="employee_id" class="form-control" disabled>
+                            <option value="{{ $employee->id }}" selected>
+                                {{ $employee->first_name . ' ' . $employee->last_name }}
+                            </option>
+                        </select>
+                        <input type="hidden" name="employee_id" value="{{ $employee->id }}">
+                    @endif
+                </div>
+ 
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="from_location">From Location:</label>
+                        <input type="text" name="from_location" id="from_location" class="form-control"
+                               value="{{ old('from_location', $reimburs->from_location) }}" required>
+                    </div>
+ 
+                    <div class="form-group col-md-6">
+                        <label for="to_location">To Location:</label>
+                        <input type="text" name="to_location" id="to_location" class="form-control"
+                               value="{{ old('to_location', $reimburs->to_location) }}" required>
+                    </div>
+                </div>
+ 
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="date_of_visit">Date of Visit:</label>
+                        <input type="date" name="date_of_visit" id="date_of_visit" class="form-control"
+                               value="{{ old('date_of_visit', $reimburs->date_of_visit) }}" required>
+                    </div>
+ 
+                    <div class="form-group col-md-6">
+                        <label for="amount">Amount:</label>
+                        <input type="number" name="amount" id="amount" class="form-control" step="0.01"
+                               value="{{ old('amount', $reimburs->amount) }}" required>
+                    </div>
+                </div>
+ 
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea name="description" id="description" class="form-control" rows="3">{{ old('description', $reimburs->description) }}</textarea>
+                </div>
+ 
+                <div class="form-group mt-3">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    <a href="{{ route('reimburs.details') }}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+ 
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            $('#success-alert').fadeOut('slow');
+        }, 1000);
+    });
+</script>
+@endsection
+ 
+ 
