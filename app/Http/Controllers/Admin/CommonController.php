@@ -9,6 +9,54 @@ use Carbon\Carbon;
 
 class CommonController extends Controller
 {
+    public function appraisal(Request $request)
+    {
+        $month = $request->input('month') ?? now()->month;
+        $currentYear = now()->year;
+        $today = now();
+
+        $employees = Employee::select('id', 'first_name', 'last_name', 'joined_date')
+            ->get()
+            ->filter(function ($employee) use ($month, $currentYear, $today) {
+                $joinedDate = Carbon::parse($employee->joined_date);
+                if ($joinedDate->diffInYears($today) < 1) {
+                    return false;
+                }
+                $appraisalDate = $joinedDate->copy()->year($currentYear);
+                if ($appraisalDate->lt($today)) {
+                    $appraisalDate->addYear();
+                }
+                return $appraisalDate->month == (int) $month;
+            })
+            ->map(function ($employee) use ($currentYear, $today) {
+                $joinedDate = Carbon::parse($employee->joined_date);
+                $appraisalYear = $joinedDate->copy()->addYears($joinedDate->diffInYears($today))->year;
+                $appraisalDate = $joinedDate->copy()->year($appraisalYear);
+                if ($appraisalDate->lt($today)) {
+                    $appraisalDate->addYear();
+                }
+                return [
+                    'id' => $employee->id,
+                    'first_name' => $employee->first_name,
+                    'last_name' => $employee->last_name,
+                    'appraisal_date' => $appraisalDate->toDateString(),
+                ];
+            })
+            ->sortBy('appraisal_date')
+            ->values();
+        if ($request->ajax()) {
+            return response()->json([
+                'status' => true,
+                'month' => (int) $month,
+                'work' => $employees
+            ]);
+        }
+        return view('common.appraisal', [
+            'employees' => $employees,
+            'month' => $month
+        ]);
+    }
+
     public function birthday(Request $request)
     {
         $month = $request->input('month') ?? now()->month;

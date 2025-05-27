@@ -153,7 +153,6 @@ class HomeController extends Controller
         }
 
         $month = now()->month;
-        // Get current month join count
         $currentMonthJoinCount = DB::table('employees')
             ->whereMonth('joined_date', now()->month)
             ->whereYear('joined_date', now()->year)
@@ -170,8 +169,27 @@ class HomeController extends Controller
         $department = DB::table('departments')
             ->count();
 
+        $month = now()->month;
+        $today = now();
 
-        return view('dashboard.dashboard', compact('month', 'events', 'dataCounts', 'usersByStatus', 'totalCount', 'statusCounts', 'travelStatusCounts', 'divisionss', 'current_month_holiday', 'currentMonthJoinCount', 'workAnniversaryCount', 'birthdayCount','department'));
+        
+        $appraisalCount = DB::table('employees')
+            ->get()
+            ->filter(function ($employee) use ($month, $today) {
+                $joinedDate = Carbon::parse($employee->joined_date);
+                if ($joinedDate->diffInYears($today) < 1) {
+                    return false;
+                }
+                $anniversary = $joinedDate->copy()->year($today->year);
+                if ($anniversary->lt($today)) {
+                    $anniversary->addYear();
+                }
+
+                return $anniversary->month == $month;
+            })
+            ->count();
+
+        return view('dashboard.dashboard', compact('month', 'events', 'dataCounts', 'usersByStatus', 'totalCount', 'statusCounts', 'travelStatusCounts', 'divisionss', 'current_month_holiday', 'currentMonthJoinCount', 'workAnniversaryCount', 'birthdayCount', 'department', 'appraisalCount'));
     }
 
     public function authenticateLoader()

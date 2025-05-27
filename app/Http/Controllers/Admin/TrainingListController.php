@@ -162,11 +162,15 @@ class TrainingListController extends Controller
     }
 
     public function show($id)
-    {
-        $training = Training::with(['trainer', 'employee'])->findOrFail($id);
-        return view('admin.traininglist.view', compact('training'));
-
-    }
+{
+    $training = Training::with(['trainer', 'employee'])->findOrFail($id);
+ 
+    $employeeIds = EmployeeTraining::where('training_id', $id)->pluck('employee_id');
+    $employee = Employee::whereIn('id', $employeeIds)->get();
+  
+ 
+    return view('admin.traininglist.view', compact('training', 'employee'));
+}
 
     public function updateStatus(Request $request, $id)
     {

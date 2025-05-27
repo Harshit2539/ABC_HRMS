@@ -136,6 +136,13 @@
                          </button>
                      </a>
                  </li>
+                 <li class="nav-item" role="presentation">
+                    <a href="{{ route('admin.departments.setup') }}">
+                    <button class="nav-link " type="button">
+                    Departments
+                    </button>
+                    </a>
+                </li>
              </ul>
 
              <button style="margin-top:1rem;" type="button" class="btn btn-primary mb-2 " data-bs-toggle="modal"

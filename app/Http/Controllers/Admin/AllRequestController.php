@@ -18,6 +18,65 @@ use Yajra\DataTables\Facades\DataTables;
 
 class AllRequestController extends Controller
 {
+
+    public function getSeriviceChartData()
+    {
+        $today = new \DateTime();
+ 
+        $employees = Employee::select('id', 'joined_date')->get();
+ 
+        $buckets = [
+            '< 1' => 0,
+            '1-2' => 0,
+            '2-3' => 0,
+            '3-4' => 0,
+            '4-5' => 0,
+            '5-6' => 0,
+            '6-7' => 0,
+            '7-8' => 0,
+            '8-9' => 0,
+            '9-10' => 0,
+            '> 10' => 0,
+        ];
+ 
+        foreach ($employees as $employee) {
+            $joinedDate = new \DateTime($employee->joined_date);
+            $years = $today->diff($joinedDate)->y;
+            $months = $today->diff($joinedDate)->m;
+ 
+            $exactYears = $years + $months / 12;
+ 
+            if ($exactYears < 1) {
+                $buckets['< 1']++;
+            } elseif ($exactYears >= 1 && $exactYears < 2) {
+                $buckets['1-2']++;
+            } elseif ($exactYears >= 2 && $exactYears < 3) {
+                $buckets['2-3']++;
+            } elseif ($exactYears >= 3 && $exactYears < 4) {
+                $buckets['3-4']++;
+            } elseif ($exactYears >= 4 && $exactYears < 5) {
+                $buckets['4-5']++;
+            } elseif ($exactYears >= 5 && $exactYears < 6) {
+                $buckets['5-6']++;
+            } elseif ($exactYears >= 6 && $exactYears < 7) {
+                $buckets['6-7']++;
+            } elseif ($exactYears >= 7 && $exactYears < 8) {
+                $buckets['7-8']++;
+            } elseif ($exactYears >= 8 && $exactYears < 9) {
+                $buckets['8-9']++;
+            } elseif ($exactYears >= 9 && $exactYears < 10) {
+                $buckets['9-10']++;
+            } else {
+                $buckets['> 10']++;
+            }
+        }
+ 
+        return response()->json([
+            'status' => true,
+            'years_in_service_distribution' => $buckets
+        ]);
+        // return response()->json($data);
+    }
     public function ctc()
     {
         $today = Carbon::now();

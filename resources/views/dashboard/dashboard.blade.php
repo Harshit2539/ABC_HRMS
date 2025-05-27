@@ -472,20 +472,20 @@
         }
 
         /* .bg-c-blue {
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-        }
+                background: linear-gradient(135deg, #1e3c72, #2a5298);
+            }
 
-        .bg-c-green {
-            background: linear-gradient(135deg, #28a745, #218838);
-        }
+            .bg-c-green {
+                background: linear-gradient(135deg, #28a745, #218838);
+            }
 
-        .bg-c-yellow {
-            background: linear-gradient(135deg, #ffc107, #e0a800);
-        }
+            .bg-c-yellow {
+                background: linear-gradient(135deg, #ffc107, #e0a800);
+            }
 
-        .bg-c-pink {
-            background: linear-gradient(135deg, #e83e8c, #c82362);
-        } */
+            .bg-c-pink {
+                background: linear-gradient(135deg, #e83e8c, #c82362);
+            } */
 
         .bg-c-orange {
             background: linear-gradient(135deg, #fd7e14, #e8590c);
@@ -553,31 +553,31 @@
 
 
                     <!-- <div class="col-xl-3 col-lg-4 col-md-6 col-12 mb-1">
-                                                                                                        <div class="card">
-                                                                                                        <span>Review</span>
-                                                                                                        <img
-                                                                                                            src="gt_illustration_6.svg"
-                                                                                                            alt=""
-                                                                                                            style="width: 60px; height: auto; display: block; margin: auto"
-                                                                                                        />
-                                                                                                        <p class="p">Hurrah! You've nothing to review.</p>
-                                                                                                        </div>
-                                                                                                
-                                                                                                        <div class="card">
-                                                                                                        <span>IT Declaration</span>
-                                                                                                        <div style="margin-top: 10px; display: flex; align-items: start">
+                                                                                                            <div class="card">
+                                                                                                            <span>Review</span>
                                                                                                             <img
-                                                                                                            src="gt_illustration_24.svg"
-                                                                                                            alt=""
-                                                                                                            style="width: 40px; margin-right: 10px"
+                                                                                                                src="gt_illustration_6.svg"
+                                                                                                                alt=""
+                                                                                                                style="width: 60px; height: auto; display: block; margin: auto"
                                                                                                             />
-                                                                                                            <p>
-                                                                                                            Uh oh! You have missed submitting your IT declaration. Please
-                                                                                                            submit it once the window opens.
-                                                                                                            </p>
-                                                                                                        </div>
-                                                                                                        </div>
-                                                                                                    </div> -->
+                                                                                                            <p class="p">Hurrah! You've nothing to review.</p>
+                                                                                                            </div>
+                                                                                                    
+                                                                                                            <div class="card">
+                                                                                                            <span>IT Declaration</span>
+                                                                                                            <div style="margin-top: 10px; display: flex; align-items: start">
+                                                                                                                <img
+                                                                                                                src="gt_illustration_24.svg"
+                                                                                                                alt=""
+                                                                                                                style="width: 40px; margin-right: 10px"
+                                                                                                                />
+                                                                                                                <p>
+                                                                                                                Uh oh! You have missed submitting your IT declaration. Please
+                                                                                                                submit it once the window opens.
+                                                                                                                </p>
+                                                                                                            </div>
+                                                                                                            </div>
+                                                                                                        </div> -->
 
                     <div class="col-xl-3 col-lg-4 col-md-6 col-12 mb-1">
                         <div class="card">
@@ -587,8 +587,8 @@
                             </p>
                             <p id="live-time"></p>
                             <!-- <div style="display: flex; justify-content: end">
-                                                                                                                    <button class="btn btn-primary" style="width: 90px">Sign In</button>
-                                                                                                                </div> -->
+                                                                                                                        <button class="btn btn-primary" style="width: 90px">Sign In</button>
+                                                                                                                    </div> -->
                         </div>
 
 
@@ -627,19 +627,19 @@
                         </div>
 
                         <!-- <div class="card">
-                                                                                                        <span>POI</span>
-                                                                                                        <div style="margin-top: 10px; display: flex; align-items: start">
-                                                                                                            <img
-                                                                                                            src="gt_illustration_24.svg"
-                                                                                                            alt=""
-                                                                                                            style="width: 40px; margin-right: 10px"
-                                                                                                            />
-                                                                                                            <p>
-                                                                                                            Hold on! You can submit your Proof of Investments (POI) once
-                                                                                                            released.
-                                                                                                            </p>
-                                                                                                        </div>
-                                                                                                        </div> -->
+                                                                                                            <span>POI</span>
+                                                                                                            <div style="margin-top: 10px; display: flex; align-items: start">
+                                                                                                                <img
+                                                                                                                src="gt_illustration_24.svg"
+                                                                                                                alt=""
+                                                                                                                style="width: 40px; margin-right: 10px"
+                                                                                                                />
+                                                                                                                <p>
+                                                                                                                Hold on! You can submit your Proof of Investments (POI) once
+                                                                                                                released.
+                                                                                                                </p>
+                                                                                                            </div>
+                                                                                                            </div> -->
 
                     </div>
 
@@ -723,12 +723,12 @@
                         </a>
                     </div>
                     <div class="col">
-                        <a href="#" class="text-decoration-none">
+                        <a href="{{ route('appraisal') }}" class="text-decoration-none">
                             <div class="dashboard-tile bg-c-orange">
                                 <div class="dashboard-icon"><i class="fa fa-check-circle"></i></div>
                                 <div>
                                     <h6>This month Appraisal</h6>
-                                    <div class="dashboard-count">0</div>
+                                    <div class="dashboard-count">{{ $appraisalCount ?? 0 }}</div>
                                 </div>
                             </div>
                         </a>
@@ -805,7 +805,7 @@
                         </a>
                     </div>
                     <div class="col">
-                        <a href="#" class="text-decoration-none">
+                        <a href="{{ route('admin.departments.setup') }}" class="text-decoration-none">
                             <div class="dashboard-tile bg-c-orange">
                                 <div class="dashboard-icon"><i class="fa fa-sitemap"></i></div>
                                 <div>
@@ -1151,48 +1151,48 @@
 
 
                 <!-- <div class="container d-flex mt-5">
-                                                                                                        <div class="row justify-content-center">
-                                                                                                            <div class="col-lg-6 d-flex justify-content-center">
-                                                                                                            <div class="circle1-container">
-                                                                                                                <div class="circle1">
+                                                                                                            <div class="row justify-content-center">
+                                                                                                                <div class="col-lg-6 d-flex justify-content-center">
+                                                                                                                <div class="circle1-container">
+                                                                                                                    <div class="circle1">
 
-                                                                                                                <div class="showing1" data-titles="Pay-Per-Click (PPC) Service" data-texts='PPC is a popular advertising strategy, in which an advertiser will pay the markers every time a user clicks on their published ad. So, as a trusted &lt;a href=&quot;https://www.batterseawebexpert.com/best-ppc-company-in-delhi/&quot;&gt;PPC company in Delhi&lt;/a&gt;, we will prepare better ads that not only promise extra leads but will improve the overall ROI of your marketing strategy.'>
-                                                                                                                    1</div>
+                                                                                                                    <div class="showing1" data-titles="Pay-Per-Click (PPC) Service" data-texts='PPC is a popular advertising strategy, in which an advertiser will pay the markers every time a user clicks on their published ad. So, as a trusted &lt;a href=&quot;https://www.batterseawebexpert.com/best-ppc-company-in-delhi/&quot;&gt;PPC company in Delhi&lt;/a&gt;, we will prepare better ads that not only promise extra leads but will improve the overall ROI of your marketing strategy.'>
+                                                                                                                        1</div>
 
-                                                                                                                <div class="showing1" data-titles="Content Marketing Service" data-texts='Do you know that a content marketing strategy can generate about 3 times more leads, compared to outbound marketing? And, as a content marketing company in Delhi, we will help you craft some really engaging blogs, customer articles, videos, and other forms of digital content to help you drive more traffic and conversion to your platform.'>
-                                                                                                                    2</div>
+                                                                                                                    <div class="showing1" data-titles="Content Marketing Service" data-texts='Do you know that a content marketing strategy can generate about 3 times more leads, compared to outbound marketing? And, as a content marketing company in Delhi, we will help you craft some really engaging blogs, customer articles, videos, and other forms of digital content to help you drive more traffic and conversion to your platform.'>
+                                                                                                                        2</div>
 
-                                                                                                                <div class="showing1" data-titles="Email marketing service" data-texts='Emails are a direct way of communicating with your customers, as they directly target the user’s inbox. And, as an email marketing company in Delhi, we will help you craft some personalized messages to inform the users about all the new products, promotions, or updates. This will help you build strong customer relationships while encouraging a repeat purchase.'>
-                                                                                                                    3</div>
+                                                                                                                    <div class="showing1" data-titles="Email marketing service" data-texts='Emails are a direct way of communicating with your customers, as they directly target the user’s inbox. And, as an email marketing company in Delhi, we will help you craft some personalized messages to inform the users about all the new products, promotions, or updates. This will help you build strong customer relationships while encouraging a repeat purchase.'>
+                                                                                                                        3</div>
 
-                                                                                                                <div class="showing1" data-titles="Social Media Marketing Service" data-texts='Social media marketing as the name suggests refers to the process of promoting your content on social media content. So, as a &lt;a href=&quot;https://www.batterseawebexpert.com/best-social-media-marketing-agency-delhi/&quot;&gt;Social media marketing agency in Delhi&lt;/a&gt;, we will market your content on all the major social media handles like Facebook, Instagram, Twitter, and LinkedIn to direct the audience to your website.'>
-                                                                                                                    what is hrms</div>
+                                                                                                                    <div class="showing1" data-titles="Social Media Marketing Service" data-texts='Social media marketing as the name suggests refers to the process of promoting your content on social media content. So, as a &lt;a href=&quot;https://www.batterseawebexpert.com/best-social-media-marketing-agency-delhi/&quot;&gt;Social media marketing agency in Delhi&lt;/a&gt;, we will market your content on all the major social media handles like Facebook, Instagram, Twitter, and LinkedIn to direct the audience to your website.'>
+                                                                                                                        what is hrms</div>
 
-                                                                                                                <div class="showing1" data-titles="Social Media Optimization (SMO) Service" data-texts='SMO includes improving the brand’s social media presence by following a variety of marketing tactics such as content curation, strategic posting, and interaction with followers. So as an expert &lt;a href=&quot;https://www.batterseawebexpert.com/best-social-media-agency-in-delhi/&quot;&gt;SMO company in Delhi&lt;/a&gt;, we will help you build a strong online presence so that you can stand out among the crowd and then prepare a strategy accordingly.'>
-                                                                                                                    5</div>
+                                                                                                                    <div class="showing1" data-titles="Social Media Optimization (SMO) Service" data-texts='SMO includes improving the brand’s social media presence by following a variety of marketing tactics such as content curation, strategic posting, and interaction with followers. So as an expert &lt;a href=&quot;https://www.batterseawebexpert.com/best-social-media-agency-in-delhi/&quot;&gt;SMO company in Delhi&lt;/a&gt;, we will help you build a strong online presence so that you can stand out among the crowd and then prepare a strategy accordingly.'>
+                                                                                                                        5</div>
 
-                                                                                                                <div class="showing1" data-titles="Web development service" data-texts='Having a responsive website is perhaps the most important thing for a business to have, as it is going to be the first thing that a user is going to notice about your brand. And, since we are a reliable &lt;a href=&quot;https://www.batterseawebexpert.com/website-development-company-in-delhi/&quot;&gt;web development company in Delhi&lt;/a&gt;, we will help you create a user-friendly and responsive website that better aligns with all of your marketing efforts.'>
-                                                                                                                    6</div>
+                                                                                                                    <div class="showing1" data-titles="Web development service" data-texts='Having a responsive website is perhaps the most important thing for a business to have, as it is going to be the first thing that a user is going to notice about your brand. And, since we are a reliable &lt;a href=&quot;https://www.batterseawebexpert.com/website-development-company-in-delhi/&quot;&gt;web development company in Delhi&lt;/a&gt;, we will help you create a user-friendly and responsive website that better aligns with all of your marketing efforts.'>
+                                                                                                                        6</div>
 
-                                                                                                                <div class="showing1" data-titles="Web Design Service" data-texts='A website should always have a great visual appeal in it. In fact, according to the CXL, a whopping 94% of first impressions of a website are based on its design. And, this is why as a &lt;a href=&quot;https://www.batterseawebexpert.com/website-designing-company-in-delhi/&quot;&gt;Website Designing Company in Delhi&lt;/a&gt; we focus on all the layout, color schemes, and typography of a website to build its aesthetic appeal and improve the conversion rate.'>
-                                                                                                                    7</div>
+                                                                                                                    <div class="showing1" data-titles="Web Design Service" data-texts='A website should always have a great visual appeal in it. In fact, according to the CXL, a whopping 94% of first impressions of a website are based on its design. And, this is why as a &lt;a href=&quot;https://www.batterseawebexpert.com/website-designing-company-in-delhi/&quot;&gt;Website Designing Company in Delhi&lt;/a&gt; we focus on all the layout, color schemes, and typography of a website to build its aesthetic appeal and improve the conversion rate.'>
+                                                                                                                        7</div>
 
-                                                                                                                <a href="#">
-                                                                                                                    <div class="d-flex justify-content-center align-items-center" style="width: 150px; Height: 150px; background-color: white; border-radius:80px; box-shadow: 0 0 15px rgb(0, 17, 31);">
-                                                                                                                    <img src="https://www.batterseawebexpert.com/wp-content/uploads/2023/07/logo.webp" alt="" width="80%">
+                                                                                                                    <a href="#">
+                                                                                                                        <div class="d-flex justify-content-center align-items-center" style="width: 150px; Height: 150px; background-color: white; border-radius:80px; box-shadow: 0 0 15px rgb(0, 17, 31);">
+                                                                                                                        <img src="https://www.batterseawebexpert.com/wp-content/uploads/2023/07/logo.webp" alt="" width="80%">
+                                                                                                                        </div>
+                                                                                                                    </a>
                                                                                                                     </div>
-                                                                                                                </a>
+                                                                                                                </div>
+                                                                                                                </div>
+                                                                                                                <div class="col-lg-6">
+                                                                                                                <div class="content-info-boxs">
+                                                                                                                    <h2 id="content-titless">Heading</h2>
+                                                                                                                    <p id="text">Click On Numbers on circle to preview different Card's</p>
+                                                                                                                </div>
                                                                                                                 </div>
                                                                                                             </div>
-                                                                                                            </div>
-                                                                                                            <div class="col-lg-6">
-                                                                                                            <div class="content-info-boxs">
-                                                                                                                <h2 id="content-titless">Heading</h2>
-                                                                                                                <p id="text">Click On Numbers on circle to preview different Card's</p>
-                                                                                                            </div>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div> -->
+                                                                                                        </div> -->
 
             </div>
         @endif
@@ -1354,12 +1354,18 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <figure class="highcharts-figure">
+                                <div id="service-chart"></div>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
-
-
-
 
 
     </div>
@@ -1555,7 +1561,7 @@
                 fetchBirthdays(selectedMonth);
             });
 
-          
+
             const defaultMonth = $('#birthdayDropdown').val();
             fetchBirthdays(defaultMonth);
         });
@@ -1805,7 +1811,7 @@
                 .then(response => response.json())
                 .then(data => {
                     const tbody = document.getElementById('leave-chart-body');
-                    tbody.innerHTML = ''; 
+                    tbody.innerHTML = '';
                     if (data.length === 0) {
                         const row =
                             `<tr><td colspan="3" style="text-align:center;">No data available</td></tr>`;
@@ -1901,13 +1907,13 @@
                 }
             });
 
-           
+
             $('#workDropdown').on('change', function() {
                 const selectedMonth = $(this).val();
                 fetchWorkAnniversaries(selectedMonth);
             });
 
-            
+
             const defaultMonth = $('#workDropdown').val();
             fetchWorkAnniversaries(defaultMonth);
         });
@@ -1955,6 +1961,68 @@
                     });
                 });
         });
+
+
+        fetch('/chart/service-data')
+            .then(response => response.json())
+            .then(response => {
+                const data = response.years_in_service_distribution;
+                const categories = ['< 1', '1-2', '2-3', '3-4', '4-5', '5-6', '6-7', '7-8', '8-9', '9-10', '> 10'];
+                const seriesData = categories.map(category => data[category] || 0); // default 0 if undefined
+
+                Highcharts.chart('service-chart', {
+                    title: {
+                        text: 'Years in Service Distribution',
+                        align: 'left'
+                    },
+                    subtitle: {
+                        text: 'Data source: /chart/service-data',
+                        align: 'left'
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Employees'
+                        }
+                    },
+                    xAxis: {
+                        categories: categories,
+                        title: {
+                            text: 'Years'
+                        }
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    plotOptions: {
+                        series: {
+                            label: {
+                                connectorAllowed: false
+                            },
+                            dataLabels: {
+                                enabled: true
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'Employees',
+                        data: seriesData
+                    }],
+                    responsive: {
+                        rules: [{
+                            condition: {
+                                maxWidth: 500
+                            },
+                            chartOptions: {
+                                legend: {
+                                    layout: 'horizontal',
+                                    align: 'center',
+                                    verticalAlign: 'bottom'
+                                }
+                            }
+                        }]
+                    }
+                });
+            });
     </script>
 
 
