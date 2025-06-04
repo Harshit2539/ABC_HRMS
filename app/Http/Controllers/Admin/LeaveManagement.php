@@ -428,7 +428,7 @@ class LeaveManagement extends Controller
                    else if($data->leave_status === 'inprogress'){
                     return '<span class="badge bg-warning text-dark">In Progress</span>';
                  }
-                 // return $data->leave_status;
+                //  return $data->leave_status;
               }) ->rawColumns(['leave_status'])->make(true);
          
    

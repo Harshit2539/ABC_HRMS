@@ -1973,12 +1973,12 @@
                 Highcharts.chart('service-chart', {
                     title: {
                         text: 'Years in Service Distribution',
-                        align: 'left'
+                        // align: 'left'
                     },
-                    subtitle: {
-                        text: 'Data source: /chart/service-data',
-                        align: 'left'
-                    },
+                    // subtitle: {
+                    //     text: 'Data source: /chart/service-data',
+                    //     align: 'left'
+                    // },
                     yAxis: {
                         title: {
                             text: 'Employees'

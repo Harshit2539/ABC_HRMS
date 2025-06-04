@@ -190,11 +190,11 @@
                                 @csrf
                                 <input type="hidden" name="id" id="employmentId">
                                 <div class="mb-3">
-                                    <label for="editEmploymentStatus" class="form-label">Employment Status</label>
+                                    <label for="editEmploymentStatus" class="form-label">Employment Status</label><span class="text-danger">*</span>
                                     <input type="text" class="form-control" id="editEmploymentStatus" name="employmentstatus" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="editDescription" class="form-label">Description</label>
+                                    <label for="editDescription" class="form-label">Description</label><span class="text-danger">*</span>
                                     <input type="text" class="form-control" id="editDescription" name="description" required>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Save Changes</button>
@@ -220,11 +220,11 @@
                             <form id="addEmploymentForm">
                                 @csrf
                                 <div class="mb-3">
-                                    <label for="addEmploymentStatus" class="form-label">Employment Status</label>
+                                    <label for="addEmploymentStatus" class="form-label">Employment Status</label><span class="text-danger">*</span>
                                     <input type="text" class="form-control" id="addEmploymentStatus" name="employmentstatus" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="addDescription" class="form-label">Description</label>
+                                    <label for="addDescription" class="form-label">Description</label><span class="text-danger">*</span>
                                     <input type="text" class="form-control" id="addDescription" name="description" required>
                                 </div>
                                
@@ -328,6 +328,7 @@
                         },
                         type: 'post',
                         success: function (response) {
+                            toastr.success('Employment status Deleted successfully!');
                             table.ajax.reload();
                         }
                     });

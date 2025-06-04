@@ -12,7 +12,7 @@ class EmploymentController extends Controller
         if($request->ajax()){
             $data = EmploymentStatus::orderBy('id', 'desc');
 
-            $data = $data;
+            // $data = $data;
             return DataTables()->of($data->get())
             
             ->addColumn('name', function ($data) {

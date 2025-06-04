@@ -570,6 +570,7 @@ Route::middleware(Localization::class)->group(function () {
         Route::get('/createRole', [RoleController::class, 'create'])->name('create.role');
         Route::post('/storeRole', [RoleController::class, 'store'])->name('role.store');
         Route::get('/edit/role/{id}', [RoleController::class, 'edit']);
+        Route::delete('/roles/{id}', [RoleController::class, 'destroy'])->name('roles.destroy');
         Route::post('update/role/{id}', [RoleController::class, 'update']);
         Route::post('/roles/{role}/permission', [RoleController::class, 'givePermission'])->name('admin.roles.permissions');
         Route::post('/admin/roles/{role}/{permission}', [RoleController::class, 'revokePermission']);
@@ -615,7 +616,9 @@ Route::middleware(Localization::class)->group(function () {
         Route::post('/categories_store', [App\Http\Controllers\Admin\CategoryController::class, 'store'])->name('categories.store');
         Route::get('/categories_edit/{id}', [App\Http\Controllers\Admin\CategoryController::class, 'edit'])->name('categories.edit');
         Route::post('/categories_update/{id}', [App\Http\Controllers\Admin\CategoryController::class, 'update'])->name('categories.update');
-        Route::get('/categories_delete/{id}', [App\Http\Controllers\Admin\CategoryController::class, 'delete'])->name('categories.delete');
+        Route::delete('/categories_delete/{id}', [App\Http\Controllers\Admin\CategoryController::class, 'delete'])->name('categories.delete');
+
+
 
 
         //------------------------------Division Route-----------------------------------------------

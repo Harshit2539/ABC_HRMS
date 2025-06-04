@@ -194,11 +194,11 @@
                                  {{-- sarthak change --}}
                                  <input type="hidden" name="id" id="jobTitleId">
                                  <div class="mb-3">
-                                     <label for="jobTitleCode" class="form-label">Job Title Code</label>
+                                     <label for="jobTitleCode" class="form-label">Job Title Code</label><span class="text-danger">*</span>
                                      <input type="text" class="form-control" id="jobTitleCode" name="code" required>
                                  </div>
                                  <div class="mb-3">
-                                     <label for="jobTitleName" class="form-label">Job Title Name</label>
+                                     <label for="jobTitleName" class="form-label">Job Title Name</label><span class="text-danger">*</span>
                                      <input type="text" class="form-control" id="jobTitleName" name="name" required>
                                  </div>
 
@@ -248,12 +248,12 @@
                                  </div>
                                  {{-- sarthak change --}}
                                  <div class="mb-3">
-                                     <label for="addJobTitleCode" class="form-label">Job Title Code</label>
+                                     <label for="addJobTitleCode" class="form-label">Job Title Code</label><span class="text-danger">*</span>
                                      <input type="text" class="form-control" id="addJobTitleCode" name="code"
                                          required>
                                  </div>
                                  <div class="mb-3">
-                                     <label for="addJobTitleName" class="form-label">Job Title Name</label>
+                                     <label for="addJobTitleName" class="form-label">Job Title Name</label><span class="text-danger">*</span>
                                      <input type="text" class="form-control" id="addJobTitleName" name="name"
                                          required>
                                  </div>
@@ -380,6 +380,7 @@
                      },
                      type: 'post',
                      success: function(response) {
+                         toastr.success('Job Title Deleted successfully!');
                          table.ajax.reload();
                      }
                  });

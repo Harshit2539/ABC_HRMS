@@ -146,7 +146,7 @@
                         </div>
 
                         <div class="form-group col-md-4">
-                            <label>Middlet Name</label>
+                            <label>Middle Name</label>
                             <input name="middle name"  v-model="middle_name" type="text" id="name" class=" form-control" required placeholder="Middle Name" />
                             <span v-if="errors.middle_name" class="text-danger">@{{ errors.middle_name }}</span>
                         </div>
@@ -395,12 +395,12 @@
                     </div>
 
 
-                    <div class="d-flex justify-content-start">
-                            <span><button type="submit" @click="tabChange('fourth_tab')" class="btn " style="font-weight:600; background-color:rgba(221, 99, 99, 0.32) !important; color : darkred !important;" id="next">Back</button></span>
-                    </div>
                     <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-start">
+                                <span><button type="submit" @click="tabChange('fourth_tab')" class="btn btn-sm btn-fill mt-4 " style="font-weight:600; background-color:rgba(221, 99, 99, 0.32) !important; color : darkred !important;" id="next">Back</button></span>
+                        </div>
                             <span v-if="is_edit">
-                                <button type="submit" class="btn btn-sm btn-fill btn-primary " @click = "updateEmployeeData" style="font-weight:600;" id="save">Update</button>
+                                <button type="submit" class="btn btn-sm btn-fill btn-primary mt-4 " @click = "updateEmployeeData" style="font-weight:600;" id="save">Update</button>
                             </span>
                             <span v-if="!is_edit">
                                 <button type="submit" @click="saveEmployeeData" class="btn btn-sm btn-fill btn-primary mt-4" id="save" style="font-weight:600; ">Save</button>

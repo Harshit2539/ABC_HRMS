@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ClientDetails;
 use App\Models\Projects;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -40,7 +41,8 @@ class ProjectController extends Controller
                 ->make(true);
         }
         $users = User::where('role_name','Client')->get();
-        return view('admin.project.list',['users'=>$users]);
+        $client = ClientDetails::all();
+        return view('admin.project.list',['users'=>$users],['client'=>$client]);
     }
     public function store(Request $request)
     {

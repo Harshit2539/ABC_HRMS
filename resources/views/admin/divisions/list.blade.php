@@ -64,7 +64,7 @@
                         <form id="addSkillForm">
                             @csrf
                             <div class="form-group">
-                                <label for="name">Name:</label>
+                                <label for="name">Name</label><span class="text-danger">*</span>
                                 <input type="text" class="form-control" id="name" name="name">
                                 <small class="text-danger name_error"></small>
                             </div>
@@ -83,7 +83,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editSkillModalLabel">Skill</h5>
+                        <h4 class="modal-title" id="editSkillModalLabel">Skill</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -93,7 +93,7 @@
                             @csrf
                             <input type="hidden" name="id" id="divisionId">
                             <div class="mb-3">
-                                <label for="editName" class="form-label">Name</label>
+                                <label for="editName" class="form-label">Name</label><span class="text-danger">*</span>
                                 <input type="text" class="form-control" id="editName" name="name">
                                 <small class="text-danger name_error"></small>
                             </div>

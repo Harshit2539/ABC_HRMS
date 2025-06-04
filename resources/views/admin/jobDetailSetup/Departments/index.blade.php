@@ -124,7 +124,7 @@
                                 @csrf
                                 <input type="hidden" name="id" id="departmentId">
                                 <div class="mb-3">
-                                    <label class="form-label">Department</label>
+                                    <label class="form-label">Department</label><span class="text-danger">*</span>
                                     <input type="text" class="form-control" id="editDepartmentStatus"
                                         name="departmentstatus" required>
                                 </div>
@@ -147,7 +147,7 @@
                             <form id="addDepartmentForm">
                                 @csrf
                                 <div class="mb-3">
-                                    <label class="form-label">Department</label>
+                                    <label class="form-label">Department</label><span class="text-danger">*</span>
                                     <input type="text" class="form-control" id="addDepartmentStatus"
                                         name="departmentstatus" required>
                                 </div>
@@ -225,6 +225,7 @@
                         _method: 'DELETE'
                     },
                     success: function(res) {
+                       toastr.success('Department Deleted successfully!');
                         table.ajax.reload();
                         alert(res.message);
                     },

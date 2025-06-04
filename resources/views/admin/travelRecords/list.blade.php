@@ -162,7 +162,7 @@
 
                         <div class="form-group col-md-6">
                             <label>Return Date</label>
-                            <input type="date" class="form-control" v-model="return_date" id="return_date" name="return_date" min="{{ date('Y-m-d')}}" @input=checkDays>
+                            <input type="date" class="form-control" v-model="return_date" id="return_date" name="return_date" min="{{ date('Y-m-d')}}" >
                             <span v-if="errors.return_date" class="text-danger">@{{ errors.return_date }}</span>
                         </div>
 
@@ -393,6 +393,7 @@
                 if (!this.travel_from) this.errors.travel_from = 'Required travel from field.';
                 if (!this.travel_to) this.errors.travel_to = 'Required travel to field.';
                 if (!this.travel_date) this.errors.travel_date = 'Required travel date.';
+                if (!this.return_date) this.errors.return_date = 'Required Return date.';
                 return Object.keys(this.errors).length == 0;
             },
             getCurrency() {
@@ -703,14 +704,14 @@
 
     $(document).on('click', '#confirmDelete', function () {
         var id = $(this).data('id');
-
         $.ajax({
             url: `/travel_records_delete/${id}`,
             type: 'GET',
             success: function (response) {
                 if (response.result === 'success') {
                     $('#deleteModal').modal('hide');
-                    table.ajax.reload();
+                    toastr.success('Travel Request deleted successfully!');
+                    vm.table.ajax.reload();
                 } else {
                     alert('Failed to delete the Travel Request. Please try again.');
                 }
@@ -762,7 +763,7 @@
                         <p><strong>Means of transportation:</strong> ${response.type}</p>
                         </div>
                           <div class="col-6">
-                        <p><strong>${response.travel_from}</strong>&nbsp;------------> &nbsp;<strong>${response.travel_to}</strong></p>
+                        <p>Source: <strong>${response.travel_from}</strong>&nbsp;------------> &nbsp;Destination: <strong>${response.travel_to}</strong></p>
                         </div>
                     </div>
 

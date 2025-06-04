@@ -71,7 +71,7 @@
                             <tr style="background: linear-gradient(90deg, rgb(255, 81, 81) 0%, rgb(220, 185, 255) 35%, rgb(255, 133, 133) 100%);">
                             <th class="text-center">Employee Name</th>
                                     <th class="text-center">Employee ID</th>
-                                    <!-- <th class="text-center">Last Name</th> -->
+                                 {{-- <th class="text-center">Last Name</th>  --}}
                                     <th class="text-center">Department</th>
                                     <th class="text-center">Action</th>
                                 </tr>

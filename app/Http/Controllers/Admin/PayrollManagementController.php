@@ -57,6 +57,7 @@ class PayrollManagementController extends Controller
                     <a href="' . route('employee.manage_payroll', $data->id) . '"
                        class="btn btn-info mr-1 btn-edit create-payroll"
                        style="font-size:smaller; font-weight:bold;"
+                       title="View Payslip"
                        data-id="' . $data->id . '">
                        <i class="fa fa-money money-icon" aria-hidden="true"></i>
                     </a>

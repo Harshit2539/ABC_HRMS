@@ -16,19 +16,25 @@ class DivisionController extends Controller
 
         if ($request->ajax()) {
             return DataTables::of($data)
-            ->addColumn('name', function ($data) {
-                return $data->name;
-            })
-          
-            ->addColumn("action", function ($data) {
-                $button = '<div style="display:flex; justify-content:center">
+                ->addColumn('name', function ($data) {
+                    return $data->name;
+                })
+
+                ->addColumn("action", function ($data) {
+                    $button = '<div style="display:flex; justify-content:center; gap:5px">
                     <a href="javascript:void(0)"
-                       class="btn btn-info mr-1 btn-edit"
-                       style="font-size:smaller; font-weight:bold;"
-                       data-id="' . $data->id . '">Edit</a>
-                </div>';
-                return $button;
-            })
+                    class="btn btn-info btn-sm btn-edit"
+                    style="font-size:smaller; font-weight:bold;"
+                    data-id="' . $data->id . '">Edit</a>
+        
+                    <a href="javascript:void(0)"
+                    class="btn btn-danger btn-sm btn-delete"
+                    style="font-size:smaller; font-weight:bold;"
+                    data-id="' . $data->id . '">Delete</a>
+                    </div>';
+
+                    return $button;
+                })
                 ->make(true);
         }
         return view('admin.divisions.list');
@@ -41,23 +47,23 @@ class DivisionController extends Controller
             ], [
                 'name.required' => 'Name is required.',
             ]);
-    
+
             if ($validator->fails()) {
                 return response()->json([
                     'result' => 'error',
                     'msg' => $validator->errors(),
                 ]);
             }
-    
+
             Division::create($request->only(['name']));
-    
+
             return response()->json([
                 'result' => 'success',
                 'msg' => 'Skill created successfully.',
             ]);
         } catch (\Exception $e) {
             app(\App\Exceptions\Handler::class)->report($e);
-    
+
             return response()->json([
                 'result' => 'failure',
                 'msg' => 'An error occurred. Please try again.',
@@ -77,27 +83,27 @@ class DivisionController extends Controller
             ], [
                 'name.required' => 'Name is required.',
             ]);
-    
+
             if ($validator->fails()) {
                 return response()->json([
                     'result' => 'error',
                     'msg' => $validator->errors(),
                 ]);
             }
-    
+
             $skill = Division::findOrFail($id);
-    
+
             $skill->update([
                 'name' => $request->input('name'),
             ]);
-    
+
             return response()->json([
                 'result' => 'success',
                 'msg' => 'Skill updated successfully.',
             ]);
         } catch (\Exception $e) {
             app(\App\Exceptions\Handler::class)->report($e);
-    
+
             return response()->json([
                 'result' => 'failure',
                 'msg' => 'An error occurred. Please try again.',

@@ -228,13 +228,13 @@
                         <p><strong>Means of transportation:</strong> ${response.type}</p>
                         </div>
                           <div class="col-6">
-                        <p><strong>${response.travel_from}</strong>&nbsp;------------> &nbsp;<strong>${response.travel_to}</strong></p>
+                        <p>Source: <strong>${response.travel_from}</strong>&nbsp;------------>&nbsp;Destination: <strong>${response.travel_to}</strong></p>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-6">
-                        <p><strong>Travel Date:</strong> ${response.travel_date}</p>
+                        <p><strong>Travel Start Date:</strong> ${response.travel_date}</p>
                         </div>
                           <div class="col-6">
                         <p><strong>Return Date:</strong> ${response.return_date}</p>

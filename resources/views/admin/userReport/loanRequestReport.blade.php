@@ -23,6 +23,12 @@
 <!-- Main content -->
 <div class="page-wrapper">
     <div class="container-fluid mt-4">
+
+        <div class="card-header d-flex justify-content-between align-items-center">
+                <div class="card-title mb-0">
+                    <h3 id="all" class="main-heading">Loan Request <span>Report </span></h3>
+                </div>
+            </div>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
 
             <li class="nav-item" role="presentation">
@@ -80,10 +86,11 @@
                             <div class="row text-center">
                                 <div class="col-12">
                                     <button type="button" id="searchBtn" class="btn btn-primary">Search</button>
-                                    <a href="{{ route('userReports.list') }}">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">Cancel</button>
-                                    </a>
+                                    {{-- <a href="{{ route('userReports.list') }}"> --}}
+                                       <button type="button" class="btn btn-secondary" onclick="location.reload();">
+                                            Clear
+                                        </button>
+                                    {{-- </a> --}}
 
                                 </div>
                             </div>

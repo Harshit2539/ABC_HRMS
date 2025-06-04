@@ -93,13 +93,13 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="rejectionModalLabel">Rejection Reason</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
                     </div>
                     <div class="modal-body">
                         <textarea class="form-control" id="rejectionReason" placeholder="Enter rejection reason"></textarea>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">Close</button>
                         <button type="button" class="btn btn-danger btn-confirm-reject" data-id="">Reject</button>
                     </div>
                 </div>

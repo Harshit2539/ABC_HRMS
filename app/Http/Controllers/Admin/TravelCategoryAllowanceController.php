@@ -10,10 +10,11 @@ use Yajra\DataTables\Facades\DataTables;
 
 class TravelCategoryAllowanceController extends Controller
 {
-    public function store(Request $request){
-        $data =  json_decode($request->data, true);
+    public function store(Request $request)
+    {
+        $data = json_decode($request->data, true);
 
-        foreach($data['child'] as $child){
+        foreach ($data['child'] as $child) {
             $issueDetail = new TravelCategoryAllowance();
             $issueDetail->division_id = $child['division_id'];
             $issueDetail->category_id = $child['category_id'];
@@ -26,7 +27,7 @@ class TravelCategoryAllowanceController extends Controller
     }
 
 
-        public function checkCombination(Request $request)
+    public function checkCombination(Request $request)
     {
         // Validate incoming request
         $request->validate([
@@ -35,7 +36,7 @@ class TravelCategoryAllowanceController extends Controller
             'allowance_id' => 'required|integer',
         ]);
 
-       
+
 
         // Check if the combination exists in the travel_category_allowance table
         $exists = DB::table('travel_category_allowances')
@@ -48,32 +49,33 @@ class TravelCategoryAllowanceController extends Controller
     }
 
 
-    public function travelCategoryData(Request $request, $id){
-        $data = TravelCategoryAllowance::with(['travel_division', 'travel_category','travel_allowance'])->where('division_id', $id)->get();
-      
+    public function travelCategoryData(Request $request, $id)
+    {
+        $data = TravelCategoryAllowance::with(['travel_division', 'travel_category', 'travel_allowance'])->where('division_id', $id)->get();
+
         if ($request->ajax()) {
             return DataTables::of($data)
-            ->addColumn('division_name', function ($data) {
-                return $data->travel_division->name;
-            })
-            ->addColumn('category_name', function ($data) {
-                return $data->travel_category->name;
-            })
-            ->addColumn('travel_allowance_category', function ($data) {
-                return $data->travel_allowance->name;
-            })
-            ->addColumn('amount', function ($data) {
-                return $data->amount;
-            })
-            ->addColumn("action", function ($data) {
-                $button = '<div style="display:flex; justify-content:center">
+                ->addColumn('division_name', function ($data) {
+                    return $data->travel_division->name;
+                })
+                ->addColumn('category_name', function ($data) {
+                    return $data->travel_category->name;
+                })
+                ->addColumn('travel_allowance_category', function ($data) {
+                    return $data->travel_allowance->name;
+                })
+                ->addColumn('amount', function ($data) {
+                    return $data->amount;
+                })
+                ->addColumn("action", function ($data) {
+                    $button = '<div style="display:flex; justify-content:center">
                      <a href="javascript:void(0)"
                        class="btn btn-info mr-1 btn-edit"
                        style="font-size:smaller; font-weight:bold;"
                        data-id="' . $data->id . '">Edit</a>
                 </div>';
-                return $button;
-            })
+                    return $button;
+                })
                 ->make(true);
         }
         return view('admin.travelcategory.divisionwisecategory', compact('id'));
@@ -89,31 +91,34 @@ class TravelCategoryAllowanceController extends Controller
     {
         try {
             // $validator = Validator::make($request->all(), [
-            //     'name' => 'required|string|max:255',
+            //     'amount' => 'required|numeric|min:0',
             // ], [
-            //     'name.required' => 'Name is required.',
+            //     'amount.required' => 'Amount is required.',
+            //     'amount.numeric' => 'Amount must be a number.',
             // ]);
-    
+
             // if ($validator->fails()) {
             //     return response()->json([
             //         'result' => 'error',
             //         'msg' => $validator->errors(),
             //     ]);
             // }
-    
+
+
             $skill = TravelCategoryAllowance::findOrFail($id);
-    
+
             $skill->update([
-                'amount' => $request->input('name'),
+                'amount' => $request->input('amount'),
             ]);
-    
+
+
             return response()->json([
                 'result' => 'success',
                 'msg' => 'Date updated successfully.',
             ]);
         } catch (\Exception $e) {
             app(\App\Exceptions\Handler::class)->report($e);
-    
+
             return response()->json([
                 'result' => 'failure',
                 'msg' => 'An error occurred. Please try again.',

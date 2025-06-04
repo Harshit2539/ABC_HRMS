@@ -22,9 +22,9 @@ class AllRequestController extends Controller
     public function getSeriviceChartData()
     {
         $today = new \DateTime();
- 
+
         $employees = Employee::select('id', 'joined_date')->get();
- 
+
         $buckets = [
             '< 1' => 0,
             '1-2' => 0,
@@ -38,14 +38,14 @@ class AllRequestController extends Controller
             '9-10' => 0,
             '> 10' => 0,
         ];
- 
+
         foreach ($employees as $employee) {
             $joinedDate = new \DateTime($employee->joined_date);
             $years = $today->diff($joinedDate)->y;
             $months = $today->diff($joinedDate)->m;
- 
+
             $exactYears = $years + $months / 12;
- 
+
             if ($exactYears < 1) {
                 $buckets['< 1']++;
             } elseif ($exactYears >= 1 && $exactYears < 2) {
@@ -70,39 +70,75 @@ class AllRequestController extends Controller
                 $buckets['> 10']++;
             }
         }
- 
+
         return response()->json([
             'status' => true,
             'years_in_service_distribution' => $buckets
         ]);
         // return response()->json($data);
     }
+
     public function ctc()
     {
         $today = Carbon::now();
-        $startDate = $today->copy()->subMonths(11)->startOfMonth();
+        $months = collect();
+        for ($i = 5; $i >= 0; $i--) {
+            $date = $today->copy()->subMonths($i);
+            $months->push([
+                'month' => $date->month,
+                'year' => $date->year,
+                'label' => $date->format('M Y'),
+                'total_salary' => 0
+            ]);
+        }
+        $startDate = $today->copy()->subMonths(5)->startOfMonth();
+        $endDate = $today->copy()->endOfMonth();
 
-        $groupedData = DB::table('employee_payslip')
-            ->select('current_month','year',
-                DB::raw('SUM(gross_salary) AS total_salary'),
-                DB::raw('MIN(released_date) as min_date'))
-            ->whereBetween('released_date', [$startDate->toDateString(), $today->endOfMonth()->toDateString()])
+        $dbData = DB::table('employee_payslip')
+            ->select('current_month', 'year', DB::raw('SUM(gross_salary) AS total_salary'))
+            ->whereBetween('released_date', [$startDate->toDateString(), $endDate->toDateString()])
             ->groupBy('year', 'current_month')
-            ->orderByRaw('MIN(released_date) DESC')
-            ->limit(6)
             ->get()
-            ->sortBy(function ($row) {
-                return $row->year * 100 + (int) $row->current_month;
-            })
-            ->values();
-
-        $seriesData = $groupedData->map(function ($row) {
-            $month = Carbon::createFromFormat('!m', $row->current_month)->format('M') . ' ' . $row->year;
-            return ['name' => $month, 'y' => round((float) $row->total_salary, 2)];
+            ->keyBy(function ($item) {
+                return $item->year . '-' . str_pad($item->current_month, 2, '0', STR_PAD_LEFT);
+            });
+        $seriesData = $months->map(function ($item) use ($dbData) {
+            $key = $item['year'] . '-' . str_pad($item['month'], 2, '0', STR_PAD_LEFT);
+            if ($dbData->has($key)) {
+                $item['total_salary'] = round((float) $dbData[$key]->total_salary, 2);
+            }
+            return ['name' => $item['label'], 'y' => $item['total_salary']];
         });
 
         return response()->json($seriesData);
     }
+
+    // public function ctc()
+    // {
+    //     $today = Carbon::now();
+    //     $startDate = $today->copy()->subMonths(11)->startOfMonth();
+
+    //     $groupedData = DB::table('employee_payslip')
+    //         ->select('current_month','year',
+    //             DB::raw('SUM(gross_salary) AS total_salary'),
+    //             DB::raw('MIN(released_date) as min_date'))
+    //         ->whereBetween('released_date', [$startDate->toDateString(), $today->endOfMonth()->toDateString()])
+    //         ->groupBy('year', 'current_month')
+    //         ->orderByRaw('MIN(released_date) DESC')
+    //         ->limit(6)
+    //         ->get()
+    //         ->sortBy(function ($row) {
+    //             return $row->year * 100 + (int) $row->current_month;
+    //         })
+    //         ->values();
+
+    //     $seriesData = $groupedData->map(function ($row) {
+    //         $month = Carbon::createFromFormat('!m', $row->current_month)->format('M') . ' ' . $row->year;
+    //         return ['name' => $month, 'y' => round((float) $row->total_salary, 2)];
+    //     });
+
+    //     return response()->json($seriesData);
+    // }
 
     public function work(Request $request)
     {

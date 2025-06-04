@@ -86,7 +86,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addNewModalLabel">Education</h5>
+                        <h4 class="modal-title" id="addNewModalLabel">Education</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -96,12 +96,12 @@
                         <form id="addEducationForm">
                             @csrf
                             <div class="form-group">
-                                <label for="name">Name:</label>
+                                <label for="name">Name </label><span style="color: red">*</span>
                                 <input type="text" class="form-control" id="name" name="name">
                                 <small class="text-danger name_error"></small>
                             </div>
                             <div class="form-group">
-                                <label for="description">Description:</label>
+                                <label for="description">Description </label><span style="color: red">*</span>
                                 <textarea class="form-control" id="description" rows="3" name="description"></textarea>
                                 <small class="text-danger description_error"></small>
                             </div>
@@ -120,7 +120,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editEducationModalLabel">Education</h5>
+                        <h4 class="modal-title" id="editEducationModalLabel">Education</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -130,12 +130,12 @@
                             @csrf
                             <input type="hidden" name="id" id="educationId">
                             <div class="mb-3">
-                                <label for="editName" class="form-label">Name</label>
+                                <label for="editName" class="form-label">Name </label><span style="color: red">*</span>
                                 <input type="text" class="form-control" id="editName" name="name">
                                 <small class="text-danger name_error"></small>
                             </div>
                             <div class="mb-3">
-                                <label for="editDescription" class="form-label">Description</label>
+                                <label for="editDescription" class="form-label">Description </label><span style="color: red">*</span>
                                 <textarea class="form-control" id="editDescription" rows="3" name="description"></textarea>
                                 <small class="text-danger description_error"></small>
                             </div>
@@ -214,6 +214,7 @@
                 if (response.result === 'success') {
                     $('#addEducationForm')[0].reset();
                     $('#addNewModal').modal('hide');
+                    toastr.success('Education Created successfully!');
                     table.ajax.reload();
 
                 } else if (response.result === 'error') {
@@ -294,6 +295,7 @@
 
                 if (response.result === 'success') {
                     $('#editEducationModal').modal('hide');
+                    toastr.success('Education Updated successfully!');
                     table.ajax.reload();
                 } else if (response.result === 'error') {
                     console.log()
@@ -325,6 +327,7 @@
             success: function (response) {
                 if (response.result === 'success') {
                     $('#deleteModal').modal('hide');
+                    toastr.success('Education deleted successfully!');
                     table.ajax.reload();
                 } else {
                     alert('Failed to delete the education. Please try again.');
