@@ -412,8 +412,9 @@ Route::middleware(Localization::class)->group(function () {
         Route::post('/assettypes', [App\Http\Controllers\Admin\AssetTypeController::class, 'store'])->name('assettypes.store');
         Route::delete('/assettypes/{id}', [App\Http\Controllers\Admin\AssetTypeController::class, 'destroy'])->name('assettypes.destroy');
         Route::post('/assettypes/bulk-delete', [App\Http\Controllers\Admin\AssetTypeController::class, 'bulkDelete'])->name('assettypes.bulkDelete');
-        Route::put('/assettypes/{id}', [App\Http\Controllers\Admin\AssetTypeController::class, 'update'])->name('assettypes.update');
         Route::post('/locations', [App\Http\Controllers\Admin\LocationController::class, 'store'])->name('locations.store');
+        Route::put('/assettypes/{id}', [App\Http\Controllers\Admin\AssetTypeController::class, 'update'])->name('assettypes.update');
+
 
         //------------------------------------------------Assets-------------------------------------------------------------
         Route::get('asset', [App\Http\Controllers\Admin\AssetController::class, 'index'])->name('asset.index');
@@ -722,6 +723,8 @@ Route::middleware(Localization::class)->group(function () {
 Route::get('/common/anniversary', [App\Http\Controllers\Admin\CommonController::class, 'work'])->name('anniversary');
 Route::get('/common/birthday', [App\Http\Controllers\Admin\CommonController::class, 'birthday'])->name('birthday');
 Route::get('/common/appraisal', [App\Http\Controllers\Admin\CommonController::class, 'appraisal'])->name('appraisal');
+Route::get('/common/month-exit', [App\Http\Controllers\HomeController::class, 'employeeThisMonthExit'])->name('month.exit');
+Route::get('/exitEmployee', [AllRequestController::class, 'exitEmployee'])->name('exitEmployee.index');
 
 
 // -----------------------------Departments Setup-----------------------------------------//

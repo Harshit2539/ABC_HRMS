@@ -157,7 +157,7 @@ class AssetController extends Controller
 
         if (!empty($ids)) {
             Asset::whereIn('id', $ids)->delete();
-            return redirect()->route('asset.index')->with('success', 'Asset Type deleted successfully.');
+            return redirect()->route('asset.index')->with('success', 'Asset deleted successfully.');
         } else {
             return response()->json(['error' => 'No assets selected'], 400);
         }
@@ -258,7 +258,6 @@ class AssetController extends Controller
  
         return response()->json(['status'=>true]);
       } catch (\Throwable $th) {
-        //throw $th;
       }
  
     }

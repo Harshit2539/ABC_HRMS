@@ -15,10 +15,25 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
+use App\Models\EmployeeSeparationDetail;
 
 class AllRequestController extends Controller
 {
 
+    public function exitEmployee(Request $request)
+    {
+        $month = $request->input('month') ?? now()->month;
+       $lastDay = EmployeeSeparationDetail::whereMonth('tentative_leaving_date', $month)
+                ->join('employees', 'employee_separation_details.employee_id', '=', 'employees.id')
+                ->select(
+                    'employee_separation_details.id',
+                    'employees.first_name',
+                    'employees.last_name',
+                    'employee_separation_details.tentative_leaving_date'
+                )
+                ->get();
+        return response()->json(['status'=>true, 'lastDays'=>$lastDay , 'month'=>$month ]);
+    }
     public function getSeriviceChartData()
     {
         $today = new \DateTime();

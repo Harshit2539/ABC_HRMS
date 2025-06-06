@@ -173,12 +173,12 @@
 
 
                 </div>
-
+{{-- 
                 <div class="container-fluid shadow-lg p-3">
 
 
                     <!-- /.card -->
-                </div>
+                </div> --}}
                 <!-- /.col -->
             </div>
             <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -292,23 +292,24 @@
 
                             }
                         }
+                        // <img src="{{ asset('assets/img/redianlogo.jpeg') }}" alt="No Data" style="width:100px; height:100px; border-radius:50%; display:block; margin:auto;">
                         $('.employeeDetails').html(` <div class="card p-5">
                                     <div class="row">
                                         <div class="col-xl-4 col-lg-4 col-md-4 col-12 mb-1">
-                                               <img src="{{ asset('assets/img/redianlogo.jpeg') }}" alt="No Data" style="width:100px; height:100px; border-radius:50%; display:block; margin:auto;">
+                                             <img src="https://storage.googleapis.com/a1aa/image/e40b9db7-8cc9-4f02-23bf-e2c7b449ab53.jpg" alt="No Data" class="rounded-circle" style="border: 2px solid #dee2e6;" width="180"   height="180" alt="Profile">  
                                         </div>
                                          <div class="col-xl-8 col-lg-8 col-md-8 col-12 mb-1 information-field">
-                                                  <p> <span class="span1">Name :-</span>   <span class="span2"> ${response.employeeDetails.first_name} ${response.employeeDetails.middle_name} ${response.employeeDetails.last_name}</span></p>
+                                                   <p><span class="span1">Name :-</span>   <span class="span2"> ${response.employeeDetails.first_name} ${response.employeeDetails.middle_name} ${response.employeeDetails.last_name}</span></p>
                                                    <p><span class="span1">Employee ID :-</span>  <span class="span2"> ${response.employeeDetails.olm_id}</span></p>
-                                                   <p><span class="span1">Mobile Number :-</span>  <span class="span2">${response.employeeDetails.mobile_phone}</span> </p>
-                                                   <p><span class="span1">Birthday :-</span>  <span class="span2">${response.employeeDetails.birthday}</span> </p>
-                                                   <p><span class="span1">City :-</span>  <span class="span2">${response.employeeDetails.city}</span></p>
+                                                   <p><span class="span1">Mobile Number :-</span>  <span class="span2">${response.employeeDetails.work_phone}</span> </p>
                                                    <p><span class="span1">Email :-</span>  <span class="span2">${response.employeeDetails.work_email}</span></p>
-                                       
+                                                   <p><span class="span1">Country :-</span>  <span class="span2">${response.employeeDetails.country.name}</span></p>
+                                                   <p><span class="span1">City :-</span>  <span class="span2">${response.employeeDetails.city}</span></p>
+                                                   <p><span class="span1">Joining Date :-</span>  <span class="span2">${response.employeeDetails.joined_date}</span></p>
+                                                   <p><span class="span1">Date Of Birth :-</span>  <span class="span2">${response.employeeDetails.birthday}</span> </p>
                                         </div>
                                     </div>
                                   </div>`);
-
                     }
                 }
             });

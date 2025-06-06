@@ -99,10 +99,10 @@ class EmployeesController extends Controller
             return DataTables::of($data)
 
             ->addColumn('olm_id', function ($data) {
-                return $data->olm_id ?? "nil";
+                return $data->olm_id ?? "nill";
             })
             ->addColumn('registration_no', function ($data) {
-                return $data->registration_no ?? "nil";
+                return $data->registration_no ?? "nill";
             })
             ->addColumn('name', function ($data) {
                 if(!empty($data->first_name)){

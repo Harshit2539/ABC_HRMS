@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Countries;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Employee;
@@ -49,8 +50,7 @@ class PeopleController extends Controller
     public function getEmployeeDetails(Request $request)
     {
 
-        $employee_details = Employee::where('employee_id', $request->id)->select('first_name', 'middle_name', 'last_name', 'olm_id', 'birthday', 'marital_status', 'city', 'country', 'work_email', 'mobile_phone')->first();
-
+        $employee_details = Employee::where('employee_id', $request->id)->select('first_name', 'middle_name', 'last_name', 'olm_id', 'birthday', 'marital_status', 'city', 'country', 'work_email', 'work_phone','joined_date')->first();
         return  response()->json(['status' => true, 'employeeDetails' => $employee_details]);
     }
 }

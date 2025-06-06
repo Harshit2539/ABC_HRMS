@@ -15,6 +15,7 @@ use PDF;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB as FacadesDB;
+use App\Models\EmployeeSeparationDetail;
 
 class HomeController extends Controller
 {
@@ -172,7 +173,7 @@ class HomeController extends Controller
         $month = now()->month;
         $today = now();
 
-        
+
         $appraisalCount = DB::table('employees')
             ->get()
             ->filter(function ($employee) use ($month, $today) {
@@ -189,7 +190,13 @@ class HomeController extends Controller
             })
             ->count();
 
-        return view('dashboard.dashboard', compact('month', 'events', 'dataCounts', 'usersByStatus', 'totalCount', 'statusCounts', 'travelStatusCounts', 'divisionss', 'current_month_holiday', 'currentMonthJoinCount', 'workAnniversaryCount', 'birthdayCount', 'department', 'appraisalCount'));
+        $exit_employee_Count = DB::table('users')
+            ->where('status', '!=', 'Active')
+            ->count();
+            
+
+
+        return view('dashboard.dashboard', compact('month', 'events', 'dataCounts', 'usersByStatus', 'totalCount', 'statusCounts', 'travelStatusCounts', 'divisionss', 'current_month_holiday', 'currentMonthJoinCount', 'workAnniversaryCount', 'birthdayCount', 'department', 'appraisalCount', 'exit_employee_Count'));
     }
 
     public function authenticateLoader()
@@ -216,6 +223,26 @@ class HomeController extends Controller
         return $pdf->download('pdfview.pdf');
     }
 
+    public function employeeThisMonthExit(Request $request)
+    {
+        $month = $request->input('month') ?? now()->month;
+ 
+        $lastDay = EmployeeSeparationDetail::whereMonth('tentative_leaving_date', $month)
+                ->join('employees', 'employee_separation_details.employee_id', '=', 'employees.id')
+                ->select(
+                    'employee_separation_details.id',
+                    'employees.first_name',
+                    'employees.last_name',
+                    'employee_separation_details.tentative_leaving_date'
+                )
+                ->get();
+          
+            
+        return view('common.month-exit', [
+            'lastDays' => $lastDay,
+            'month' => $month
+        ]);
+    }
 
 
 }

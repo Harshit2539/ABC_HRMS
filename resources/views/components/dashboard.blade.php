@@ -20,7 +20,7 @@
  
     <main class="welcomeSection px-4 sm:px-6 md:px-10 pb-10 max-w-[1440px] mx-auto">
       <section class="relative bg-white rounded-b-[40px] shadow-md overflow-visible pt-8 pb-12 px-6 sm:px-10 mb-8">
-        <img alt="Illustration of a city skyline" class="w-full h-[120px] object-cover rounded-b-[40px] absolute top-0 left-0 right-0" src="https://storage.googleapis.com/a1aa/image/c68e866b-75ff-4b67-5db0-5e21486357d3.jpg" style="z-index:0; pointer-events:none;" />
+        <img alt="Illustration of a city skyline" class="w-full h-[120px] object-cover rounded-b-[40px] absolute top-0 left-0 right-0" src={{ asset('assets/img/dashimg.jpg') }} style="z-index:0; pointer-events:none;" />
         <div class="relative z-10">
           <h2 class="text-lg font-normal text-[#1E293B] mb-1">{{$greeting}}</h2>
           <p class="text-sm text-[#475569] flex items-center gap-1">

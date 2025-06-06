@@ -81,6 +81,9 @@
             color: #007bff;
         }
     </style>
+    @php
+        $groupedData = $data->groupBy('year');
+    @endphp
 
     <div class="page-wrapper">
         <div class="container-fluid mt-4">
@@ -94,9 +97,14 @@
             <div class="card">
                 <div class="card-header">
                     <ul class="nav nav-tabs" id="payslipTabs">
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#2025">Payslips</a>
-                        </li>
+                        @php $first = true; @endphp
+                        @foreach ($groupedData as $year => $items)
+                            <li class="nav-item">
+                                <a class="nav-link {{ $first ? 'active' : '' }}" data-toggle="tab"
+                                    href="#tab{{ $year }}">{{ $year }}</a>
+                            </li>
+                            @php $first = false; @endphp
+                        @endforeach
                     </ul>
                 </div>
                 <div class="card-body">
@@ -104,77 +112,75 @@
                         <div class="col-md-3">
                             <h6 class="jump-to">JUMP TO</h6>
                             <ul class="nav flex-column">
-                                <li class="nav-item"><a class="nav-link" href="#2025">2025</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#2024">2024</a></li>
+                                @foreach ($groupedData as $year => $items)
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#tab{{ $year }}">{{ $year }}</a>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                         <div class="col-md-9">
                             <div class="tab-content">
-                                <div id="2025" class="tab-pane fade show active">
-                                    <div class="card">
-                                        <div class="card-header">2025</div>
-                                        <div class="accordion" id="policyAccordion">
-                                            <div class="card">
-                                                <div class="card-header" id="heading0">
-                                                    <h5 class="mb-0">
-                                                        <button class="btn btn-link" data-toggle="collapse"
-                                                            data-target="#collapse0" aria-expanded="true"
-                                                            aria-controls="collapse0">
-                                                            Payslip May 2025
-                                                            <span class="ml-3 text-muted small">Last updated on: 24 May,
-                                                                2025</span>
-                                                        </button>
-                                                    </h5>
-                                                </div>
-                                                <div id="collapse0" class="collapse show" aria-labelledby="heading0"
-                                                    data-parent="#policyAccordion">
-                                                    <div class="card-body">
-                                                        <a href="#" download
-                                                            class="btn btn-sm btn-primary">
-                                                            <i class="la la-download"></i> Download File
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                @if ($data->isEmpty())
+                                    <p>No payslip data found for your profile.</p>
+                                @endif
 
-                                <div id="2024" class="tab-pane fade show active">
-                                    <div class="card">
-                                        <div class="card-header">2024</div>
-                                        <div class="accordion" id="accordion2024">
-                                            <div class="card">
-                                                <div class="card-header" id="heading1">
-                                                    <h5 class="mb-0">
-                                                        <button class="btn btn-link collapsed" data-toggle="collapse"
-                                                            data-target="#collapse1" aria-expanded="false"
-                                                            aria-controls="collapse1">
-                                                            Payslip Jan 2024
-                                                            <span class="ml-3 text-muted small">Last updated on: 24 Jan,
-                                                                2024</span>
-                                                        </button>
-                                                    </h5>
-                                                </div>
-                                                <div id="collapse1" class="collapse" aria-labelledby="heading1"
-                                                    data-parent="#accordion2024">
-                                                    <div class="card-body">
-                                                        <a href="#" download
-                                                            class="btn btn-sm btn-primary">
-                                                            <i class="la la-download"></i> Download File
-                                                        </a>
+                                @php $first = true; @endphp
+                                @foreach ($groupedData as $year => $items)
+                                    <div id="{{ $year }}" class="tab-pane fade {{ $first ? 'show active' : '' }}">
+                                        <div class="card">
+                                            <div class="card-header">{{ $year }}</div>
+                                            <div class="accordion" id="accordion{{ $year }}">
+                                                @foreach ($items as $index => $item)
+                                                    @php
+                                                        $monthName = \Carbon\Carbon::create()
+                                                            ->month($item->current_month)
+                                                            ->format('M');
+                                                        $collapseId = 'collapse' . $year . '_' . $index;
+                                                        $headingId = 'heading' . $year . '_' . $index;
+                                                    @endphp
+                                                    <div class="card">
+                                                        <div class="card-header" id="{{ $headingId }}">
+                                                            <h5 class="mb-0">
+                                                                <button
+                                                                    class="btn btn-link {{ !$first && $index !== 0 ? 'collapsed' : '' }}"
+                                                                    data-toggle="collapse"
+                                                                    data-target="#{{ $collapseId }}"
+                                                                    aria-expanded="{{ $first && $index === 0 ? 'true' : 'false' }}"
+                                                                    aria-controls="{{ $collapseId }}">
+                                                                    Payslip {{ $monthName }} {{ $item->year }}
+                                                                    <span class="ml-3 text-muted small">
+                                                                        Last updated on:
+                                                                        {{ \Carbon\Carbon::parse($item->released_date)->format('d M, Y') }}
+                                                                    </span>
+                                                                </button>
+                                                            </h5>
+                                                        </div>
+                                                        <div id="{{ $collapseId }}"
+                                                            class="collapse {{ $first && $index === 0 ? 'show' : '' }}"
+                                                            aria-labelledby="{{ $headingId }}"
+                                                            data-parent="#accordion{{ $year }}">
+                                                            <div class="card-body">
+                                                                <a href="#" download class="btn btn-sm btn-primary">
+                                                                    <i class="la la-download"></i> Download File
+                                                                </a>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                    @php $first = false; @endphp
+                                @endforeach
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet">

@@ -141,19 +141,19 @@
 
                         <div class="form-group col-md-4">
                             <label>First Name</label>
-                            <input name="first name"  v-model="first_name" type="text" id="name" class=" form-control" required placeholder="First Name" />
+                            <input name="first name"  v-model="first_name" type="text" id="name" class=" form-control" required placeholder="First Name"   @input="first_name = first_name.replace(/[^a-zA-Z\s]/g, '')" />
                             <span v-if="errors.first_name" class="text-danger">@{{ errors.first_name }}</span>
                         </div>
 
                         <div class="form-group col-md-4">
                             <label>Middle Name</label>
-                            <input name="middle name"  v-model="middle_name" type="text" id="name" class=" form-control" required placeholder="Middle Name" />
+                            <input name="middle_name"  v-model="middle_name" type="text" id="name" class=" form-control" required placeholder="Middle Name" @input="middle_name = middle_name.replace(/[^a-zA-Z\s]/g, '')" />
                             <span v-if="errors.middle_name" class="text-danger">@{{ errors.middle_name }}</span>
                         </div>
 
                         <div class="form-group col-md-4">
                             <label>Last Name</label>
-                            <input name="last name"  v-model="last_name" type="text" id="name" class=" form-control" required placeholder="Last Name" />
+                            <input name="last_name"  v-model="last_name" type="text" id="name" class=" form-control" required placeholder="Last Name" @input="last_name = last_name.replace(/[^a-zA-Z\s]/g, '')" />
                             <span v-if="errors.last_name" class="text-danger">@{{ errors.last_name }}</span>
                         </div>
 
@@ -291,17 +291,17 @@
 
                             <div class="form-group col-md-4">
                                 <label>Contract Type</label>
-                                <input name="contract_type"  v-model="contract_type" type="text" id="name" class=" form-control" required placeholder="Contract Type" />
+                                <input name="contract_type"  v-model="contract_type" type="text" id="name" class=" form-control" required placeholder="Contract Type" @input="contract_type = contract_type.replace(/[^a-zA-Z\s]/g, '')" />
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label>Probation Period</label>
-                                <input name="probation_period"  v-model="probation_period" type="text" id="name" class=" form-control" required placeholder="Probation Period" />
+                                <input name="probation_period"  v-model="probation_period" type="number" id="name" class=" form-control" required placeholder="Probation Period In Months" />
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label>Salary on Contract</label>
-                                <input name="salary_on_contract"  v-model="salary_on_contract" type="text" id="name" class=" form-control" required placeholder="Salary On Contract" />
+                                <input name="salary_on_contract"  v-model="salary_on_contract" type="text" id="name" class=" form-control" required placeholder="Salary On Contract"  @input="salary_on_contract = salary_on_contract.replace(/[^0-9]/g, '')" />
                             </div>
                     </div> 
 
@@ -342,22 +342,22 @@
 
                         <div class="form-group col-md-4">
                             <label>Postal/Zip Code</label>
-                            <input name="Postal/Zip_code" v-model="postal_zip_code" type="text" id="postal/zip_code" class=" form-control" required placeholder="Postal/Zip Code" />
+                            <input name="Postal/Zip_code" v-model="postal_zip_code" type="text" id="postal/zip_code" class=" form-control" required placeholder="Postal/Zip Code"  @input="postal_zip_code = postal_zip_code.replace(/[^0-9]/g, '')" />
                         </div>
 
                         <div class="form-group col-md-4">
                             <label>Home Phone</label>
-                            <input name="home_phone" v-model="home_phone" type="text" id="home_phone" class=" form-control" required placeholder="Home Phone" />
+                            <input name="home_phone" v-model="home_phone" type="text" id="home_phone" class=" form-control" required placeholder="Home Phone" @input="home_phone = home_phone.replace(/[^0-9]/g, '')" />
                         </div>
 
                         <div class="form-group col-md-4">
                             <label>Mobile Phone</label>
-                            <input name="mobile_phone" v-model="mobile_phone" type="text" id="mobile_phone" class=" form-control" required placeholder="Mobile Phone" />
+                            <input name="mobile_phone" v-model="mobile_phone" type="text" id="mobile_phone" class=" form-control" required placeholder="Mobile Phone" @input="mobile_phone = mobile_phone.replace(/[^0-9]/g, '')" />
                         </div>
 
                         <div class="form-group col-md-4">
                             <label>Work Phone</label>
-                            <input name="work_phone" v-model="work_phone" type="text" id="work_phone" class=" form-control" required placeholder="Work Phone" />
+                            <input name="work_phone" v-model="work_phone" type="text" id="work_phone" class=" form-control" required placeholder="Work Phone" @input="work_phone = work_phone.replace(/[^0-9]/g, '')" />
                             <span v-if="errors.work_phone" class="text-danger">@{{ errors.work_phone }}</span>
                         </div>
 

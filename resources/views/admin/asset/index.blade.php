@@ -12,20 +12,28 @@
                 <div class="card-title mb-0">
                     <h3 id="all" class="main-heading">Assets<span>Ready to lent Assets ?</span></h3>
                 </div>
-                @if (session('success'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        {{ session('success') }}
-                        <button type="button" class="btn btn-close" data-bs-dismiss="alert"
-                            aria-label="Close">&times;</button>
-                    </div>
-                @endif
                 <div class="d-flex align-items-center">
                     <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#addAssetModal">
                         + Add New Asset Type
                     </button>
                 </div>
             </div>
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert" id="success-alert">
+                    {{ session('success') }}
+                </div>
 
+                <script>
+                    setTimeout(function() {
+                        let alert = document.getElementById('success-alert');
+                        if (alert) {
+                            alert.classList.remove('show');
+                            alert.classList.add('fade');
+                            setTimeout(() => alert.remove(), 500);
+                        }
+                    }, 2000);
+                </script>
+            @endif
             <div class="card">
                 <div class="card-body">
                     <ul class="nav nav-tabs mb-3">
@@ -127,7 +135,7 @@
 
 
                                                 <form action="{{ route('asset.destroy', $asset->id) }}" method="POST"
-                                                    class="d-inline">
+                                                    class="d-inline" onsubmit="return confirm('Are you sure you want to delete this asset?');">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm"><i
@@ -187,7 +195,7 @@
                                                     <th>Lend BY</th>
                                                     <th>Lend Date</th>
                                                     <th>Return Date</th>
-                                                    <th>Return BY</th>
+                                                    <th>Return To</th>
                                                     <th>Actual Return Date</th>
                                                     <th>Notes</th>
                                                     {{-- <th>Action</th> --}}
@@ -228,12 +236,12 @@
 
                                 <div class="modal-body">
                                     <div class="form-group">
-                                        <label class="font-weight-bold">* User</label>
+                                        <label class="font-weight-bold">User</label> <span style="color: red"> *</span>
                                         <input type="text" class="form-control" id="returnUserName" disabled>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label>Lend Date</label>
+                                            <label>Lent Date</label>
                                             <input type="text" class="form-control" id="lendDate" disabled>
                                         </div>
                                         <div class="form-group col-md-6">
@@ -269,7 +277,7 @@
 
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-light border"
-                                        data-dismiss="modal">Cancel</button>
+                                        data-bs-dismiss="modal">Cancel</button>
                                     <button type="submit" class="btn btn-danger">Create</button>
                                 </div>
                             </form>
@@ -372,18 +380,18 @@
                                     <input type="hidden" name="asset_id" id="asset_id" class="asset_id">
 
                                     <div class="form-group">
-                                        <label for="user_id">* User</label>
+                                        <label for="user_id">User</label><span style="color: red"> *</span>
                                         <select id="user_id" name="user_id" class="form-control" required></select>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="lend_date">* Lend Date</label>
+                                        <label for="lend_date">Lend Date</label><span style="color: red"> *</span>
                                         <input type="date" id="lend_date" name="lend_date" class="form-control"
                                             required>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="return_date">* Return Date</label>
+                                        <label for="return_date">Return Date</label>
                                         <input type="date" id="return_date" name="return_date" class="form-control">
                                     </div>
 
@@ -509,242 +517,242 @@
                                     <button type="submit" class="btn btn-danger">Create</button>
                                     <button type="button" class="btn btn-light border ms-2"
                                         data-bs-dismiss="modal">Cancel</button>
-                            {{-- </div> --}}
-                            </form>
+                                    {{-- </div> --}}
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
 
-            <!-- Add Asset Type Modal -->
-            <div class="modal fade" id="addAssetTypeModal" tabindex="-1" aria-labelledby="addAssetTypeLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="addAssetTypeLabel">Add New Asset Type</h5>
-                            <button type="button" class="btn nbtn-close" data-bs-dismiss="modal"
-                                aria-label="Close">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="addAssetTypeForm" action="{{ route('assettypes.store') }}" method="POST">
-                                @csrf
-                                <div class="mb-3">
-                                    <label for="addAssetTypeName" class="form-label">
-                                        <span class="text-danger">*</span> Name
-                                    </label>
-                                    <input type="text" class="form-control" id="addAssetTypeName" name="name"
-                                        required>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-danger">
-                                        <i class="fa fa-save me-2"></i> Create
-                                    </button>
-                                    <button type="button" class="btn btn-light border"
-                                        data-bs-dismiss="modal">Cancel</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Add Location Modal -->
-            <div class="modal fade" id="addLocationModal" tabindex="-1" aria-labelledby="addLocationLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="addLocationLabel">Add New Location</h5>
-                            <button type="button" class="btn btn-close" data-bs-dismiss="modal"
-                                aria-label="Close">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="addLocationForm" action="{{ route('locations.store') }}" method="POST">
-                                @csrf
-                                <div class="mb-3">
-                                    <label for="locationName" class="form-label"><span class="text-danger">*</span>
-                                        Name</label>
-                                    <input type="text" class="form-control" id="locationName" name="name" required
-                                        placeholder="Please Enter Name">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="locationAddress" class="form-label">Address</label>
-                                    <textarea class="form-control" id="locationAddress" name="address" placeholder="Please Enter Address"></textarea>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-danger"><i class="fa fa-save me-2"></i>
-                                        Create</button>
-                                    <button type="button" class="btn btn-light border"
-                                        data-bs-dismiss="modal">Cancel</button>
-                                </div>
-                            </form>
+                <!-- Add Asset Type Modal -->
+                <div class="modal fade" id="addAssetTypeModal" tabindex="-1" aria-labelledby="addAssetTypeLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addAssetTypeLabel">Add New Asset Type</h5>
+                                <button type="button" class="btn nbtn-close" data-bs-dismiss="modal"
+                                    aria-label="Close">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="addAssetTypeForm" action="{{ route('assettypes.store') }}" method="POST">
+                                    @csrf
+                                    <div class="mb-3">
+                                        <label for="addAssetTypeName" class="form-label">
+                                            <span class="text-danger">*</span> Name
+                                        </label>
+                                        <input type="text" class="form-control" id="addAssetTypeName" name="name"
+                                            required>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-danger">
+                                            <i class="fa fa-save me-2"></i> Create
+                                        </button>
+                                        <button type="button" class="btn btn-light border"
+                                            data-bs-dismiss="modal">Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- Bulk Delete Form -->
-            <form id="bulkDeleteForm" action="{{ route('asset.bulkDelete') }}" method="POST">
-                @csrf
-                <input type="hidden" name="ids" id="bulkDeleteIds">
-            </form>
-            <script>
-                $(document).ready(function() {
-                    // When the "Return" button is clicked
-                    $(document).on('click', '.returnBtn', function() {
-                        // Get the asset data from the button's data attributes
-                        var assetId = $(this).data('id');
-                        var userName = $(this).data('user');
-                        var lendDate = $(this).data('lend-date');
-                        var returnDate = $(this).data('return-date');
+                <!-- Add Location Modal -->
+                <div class="modal fade" id="addLocationModal" tabindex="-1" aria-labelledby="addLocationLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addLocationLabel">Add New Location</h5>
+                                <button type="button" class="btn btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="addLocationForm" action="{{ route('locations.store') }}" method="POST">
+                                    @csrf
+                                    <div class="mb-3">
+                                        <label for="locationName" class="form-label"><span class="text-danger">*</span>
+                                            Name</label>
+                                        <input type="text" class="form-control" id="locationName" name="name"
+                                            required placeholder="Please Enter Name">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="locationAddress" class="form-label">Address</label>
+                                        <textarea class="form-control" id="locationAddress" name="address" placeholder="Please Enter Address"></textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-danger"><i class="fa fa-save me-2"></i>
+                                            Create</button>
+                                        <button type="button" class="btn btn-light border"
+                                            data-bs-dismiss="modal">Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Bulk Delete Form -->
+                <form id="bulkDeleteForm" action="{{ route('asset.bulkDelete') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="ids" id="bulkDeleteIds">
+                </form>
+                <script>
+                    $(document).ready(function() {
+                        // When the "Return" button is clicked
+                        $(document).on('click', '.returnBtn', function() {
+                            // Get the asset data from the button's data attributes
+                            var assetId = $(this).data('id');
+                            var userName = $(this).data('user');
+                            var lendDate = $(this).data('lend-date');
+                            var returnDate = $(this).data('return-date');
 
-                        // Populate the modal with the asset data
-                        $('#returnAssetId').val(assetId);
-                        $('#returnUserId').val($(this).data('user-id'));
-                        $('#returnUserName').val(userName);
-                        $('#lendDate').val(lendDate);
-                        $('#returnDate').val(returnDate);
+                            // Populate the modal with the asset data
+                            $('#returnAssetId').val(assetId);
+                            $('#returnUserId').val($(this).data('user-id'));
+                            $('#returnUserName').val(userName);
+                            $('#lendDate').val(lendDate);
+                            $('#returnDate').val(returnDate);
 
-                        // Show the modal
-                        $('#returnAssetModal').modal('show');
+                            // Show the modal
+                            $('#returnAssetModal').modal('show');
+                        });
+                        $(document).on('submit', '#returnAssetForm', function(e) {
+
+                            e.preventDefault();
+
+                            let formData = $(this).serialize();
+                            //   let formData = new FormData(); // lowercase variable name to avoid conflict
+
+
+                            $.ajax({
+                                url: $(this).attr('action'),
+                                type: 'POST',
+                                data: formData,
+                                success: function(response) {
+
+                                    if (response.status) {
+
+                                        let assetId = $('#returnAssetId').val();
+
+                                        // Update button dynamically
+                                        let btn = $('.returnBtn[data-id="' + assetId + '"]');
+                                        btn.removeClass('btn-danger returnBtn').addClass(
+                                            'btn-primary lentToBtn').text(
+                                            'Lent To');
+
+                                        // Reset the "Lent To" column
+                                        let row = btn.closest('tr');
+                                        row.find('td:nth-child(5)').text('Not Assigned');
+
+                                        $('#returnAssetModal').modal('hide');
+                                        window.setTimeout(function() {
+                                            location.reload()
+                                        }, 700);
+                                    }
+                                }
+                            });
+                        });
                     });
-                    $(document).on('submit', '#returnAssetForm', function(e) {
-
-                        e.preventDefault();
-
-                        let formData = $(this).serialize();
-                        //   let formData = new FormData(); // lowercase variable name to avoid conflict
 
 
-                        $.ajax({
-                            url: $(this).attr('action'),
-                            type: 'POST',
-                            data: formData,
-                            success: function(response) {
 
-                                if (response.status) {
 
-                                    let assetId = $('#returnAssetId').val();
+                    // fkjf
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const selectAll = document.getElementById('selectAll');
+                        const checkboxes = document.querySelectorAll('.checkbox-item');
+                        const bulkDeleteBtn = document.getElementById('bulkDeleteBtn');
+                        const bulkDeleteForm = document.getElementById('bulkDeleteForm');
+                        const bulkDeleteIds = document.getElementById('bulkDeleteIds');
 
-                                    // Update button dynamically
-                                    let btn = $('.returnBtn[data-id="' + assetId + '"]');
-                                    btn.removeClass('btn-danger returnBtn').addClass(
-                                        'btn-primary lentToBtn').text(
-                                        'Lent To');
+                        // Select All Checkbox
+                        selectAll.addEventListener('change', function() {
+                            checkboxes.forEach(checkbox => {
+                                checkbox.checked = selectAll.checked;
+                            });
+                            toggleDeleteButton();
+                        });
 
-                                    // Reset the "Lent To" column
-                                    let row = btn.closest('tr');
-                                    row.find('td:nth-child(5)').text('Not Assigned');
+                        // Individual Checkboxes
+                        checkboxes.forEach(checkbox => {
+                            checkbox.addEventListener('change', function() {
+                                toggleDeleteButton();
+                            });
+                        });
 
-                                    $('#returnAssetModal').modal('hide');
-                                    window.setTimeout(function() {
-                                        location.reload()
-                                    }, 700);
+                        function toggleDeleteButton() {
+                            const selected = [...checkboxes].filter(checkbox => checkbox.checked);
+                            bulkDeleteBtn.classList.toggle('hidden', selected.length === 0);
+                        }
+
+                        // Bulk Delete Action
+                        bulkDeleteBtn.addEventListener('click', function() {
+                            let selectedIds = [...checkboxes]
+                                .filter(checkbox => checkbox.checked)
+                                .map(checkbox => checkbox.value);
+
+                            if (selectedIds.length > 0) {
+                                if (confirm('Are you sure you want to delete the selected Asset ?')) {
+                                    bulkDeleteIds.value = selectedIds.join(',');
+                                    bulkDeleteForm.submit();
                                 }
                             }
                         });
                     });
-                });
+                </script>
+                <script>
+                    // assets details view
+                    $(document).ready(function() {
+                        // Load Asset Details
+                        $(".view-asset").click(function() {
+                            let assetId = $(this).data("id");
 
+                            $.ajax({
+                                url: `/asset/${assetId}`,
+                                type: "GET",
+                                success: function(asset) {
+                                    $("#assetName").text(asset.name);
+                                    $("#assetType").text(asset.asset_type ? asset.asset_type.name : 'N/A');
+                                    $("#serialNumber").text(asset.serial_number ?? 'N/A');
+                                    $("#location").text(asset.location ? asset.location.name : 'N/A');
+                                    $("#status").text(asset.status)
+                                        .removeClass()
+                                        .addClass(
+                                            `badge badge-${asset.status === 'Working' ? 'success' : 'danger'}`
+                                        );
+                                    $("#description").text(asset.description ?? 'N/A');
+                                    $("#brokenBy").text(asset.broken_by ?? '-');
 
+                                    let imgSrc = asset.image ? `/storage/${asset.image}` :
+                                        '/images/no-image.png';
+                                    $("#assetImage").attr("src", imgSrc);
 
-
-                // fkjf
-                document.addEventListener('DOMContentLoaded', function() {
-                    const selectAll = document.getElementById('selectAll');
-                    const checkboxes = document.querySelectorAll('.checkbox-item');
-                    const bulkDeleteBtn = document.getElementById('bulkDeleteBtn');
-                    const bulkDeleteForm = document.getElementById('bulkDeleteForm');
-                    const bulkDeleteIds = document.getElementById('bulkDeleteIds');
-
-                    // Select All Checkbox
-                    selectAll.addEventListener('change', function() {
-                        checkboxes.forEach(checkbox => {
-                            checkbox.checked = selectAll.checked;
+                                    $("#assetDetailModal").modal("show");
+                                    loadAssetReturns(1, assetId); // Load return records for this asset
+                                },
+                                error: function() {
+                                    alert("Asset details could not be loaded.");
+                                }
+                            });
                         });
-                        toggleDeleteButton();
-                    });
 
-                    // Individual Checkboxes
-                    checkboxes.forEach(checkbox => {
-                        checkbox.addEventListener('change', function() {
-                            toggleDeleteButton();
-                        });
-                    });
+                        // Load Asset Return History
+                        function loadAssetReturns(page, assetId) {
+                            $.ajax({
+                                url: `/get-asset-returns?asset_id=${assetId}&page=${page}`,
+                                type: "GET",
+                                dataType: "json",
+                                success: function(response) {
+                                    let tableBody = $("#assetReturnsTableBody");
+                                    tableBody.empty();
 
-                    function toggleDeleteButton() {
-                        const selected = [...checkboxes].filter(checkbox => checkbox.checked);
-                        bulkDeleteBtn.classList.toggle('hidden', selected.length === 0);
-                    }
-
-                    // Bulk Delete Action
-                    bulkDeleteBtn.addEventListener('click', function() {
-                        let selectedIds = [...checkboxes]
-                            .filter(checkbox => checkbox.checked)
-                            .map(checkbox => checkbox.value);
-
-                        if (selectedIds.length > 0) {
-                            if (confirm('Are you sure you want to delete the selected Asset ?')) {
-                                bulkDeleteIds.value = selectedIds.join(',');
-                                bulkDeleteForm.submit();
-                            }
-                        }
-                    });
-                });
-            </script>
-            <script>
-                // assets details view
-                $(document).ready(function() {
-                    // Load Asset Details
-                    $(".view-asset").click(function() {
-                        let assetId = $(this).data("id");
-
-                        $.ajax({
-                            url: `/asset/${assetId}`,
-                            type: "GET",
-                            success: function(asset) {
-                                $("#assetName").text(asset.name);
-                                $("#assetType").text(asset.asset_type ? asset.asset_type.name : 'N/A');
-                                $("#serialNumber").text(asset.serial_number ?? 'N/A');
-                                $("#location").text(asset.location ? asset.location.name : 'N/A');
-                                $("#status").text(asset.status)
-                                    .removeClass()
-                                    .addClass(
-                                        `badge badge-${asset.status === 'Working' ? 'success' : 'danger'}`
-                                    );
-                                $("#description").text(asset.description ?? 'N/A');
-                                $("#brokenBy").text(asset.broken_by ?? '-');
-
-                                let imgSrc = asset.image ? `/storage/${asset.image}` :
-                                    '/images/no-image.png';
-                                $("#assetImage").attr("src", imgSrc);
-
-                                $("#assetDetailModal").modal("show");
-                                loadAssetReturns(1, assetId); // Load return records for this asset
-                            },
-                            error: function() {
-                                alert("Asset details could not be loaded.");
-                            }
-                        });
-                    });
-
-                    // Load Asset Return History
-                    function loadAssetReturns(page, assetId) {
-                        $.ajax({
-                            url: `/get-asset-returns?asset_id=${assetId}&page=${page}`,
-                            type: "GET",
-                            dataType: "json",
-                            success: function(response) {
-                                let tableBody = $("#assetReturnsTableBody");
-                                tableBody.empty();
-
-                                if (response.data.length === 0) {
-                                    tableBody.append(
-                                        `<tr><td colspan="8" class="text-center">No records found</td></tr>`
-                                    );
-                                } else {
-                                    $.each(response.data, function(index, item) {
-                                        tableBody.append(`
+                                    if (response.data.length === 0) {
+                                        tableBody.append(
+                                            `<tr><td colspan="8" class="text-center">No records found</td></tr>`
+                                        );
+                                    } else {
+                                        $.each(response.data, function(index, item) {
+                                            tableBody.append(`
                             <tr>
                                 <td>${item.name}</td>
                                  <td>${item.lend_to}</td>
@@ -756,281 +764,281 @@
                                 <td>${item.notes}</td>
                                 </tr>
                                 `);
-                                        // <td>
-                                        //     <button class="btn btn-sm btn-danger delete-return" data-id="${item.id}">Delete</button>
-                                        // </td>
-                                    });
-                                }
+                                            // <td>
+                                            //     <button class="btn btn-sm btn-danger delete-return" data-id="${item.id}">Delete</button>
+                                            // </td>
+                                        });
+                                    }
 
-                                // Pagination
-                                let paginationLinks = "";
-                                if (response.pagination.prev_page_url) {
+                                    // Pagination
+                                    let paginationLinks = "";
+                                    if (response.pagination.prev_page_url) {
+                                        paginationLinks +=
+                                            `<button class="btn btn-sm btn-secondary" onclick="loadAssetReturns(${response.pagination.current_page - 1}, ${assetId})">Previous</button> `;
+                                    }
                                     paginationLinks +=
-                                        `<button class="btn btn-sm btn-secondary" onclick="loadAssetReturns(${response.pagination.current_page - 1}, ${assetId})">Previous</button> `;
-                                }
-                                paginationLinks +=
-                                    `Page ${response.pagination.current_page} of ${response.pagination.last_page} `;
-                                if (response.pagination.next_page_url) {
-                                    paginationLinks +=
-                                        `<button class="btn btn-sm btn-secondary" onclick="loadAssetReturns(${response.pagination.current_page + 1}, ${assetId})">Next</button>`;
-                                }
-                                $("#paginationLinks").html(paginationLinks);
-                            },
-                            error: function() {
-                                alert("Error loading asset return data.");
-                            }
-                        });
-                    }
-
-                    // Delete Asset Return Record
-                    $(document).on("click", ".delete-return", function() {
-                        let returnId = $(this).data("id");
-
-                        if (confirm("Are you sure you want to delete this record?")) {
-                            $.ajax({
-                                url: `/asset-returns/${returnId}`,
-                                type: "DELETE",
-                                success: function() {
-                                    alert("Record deleted successfully.");
-                                    $("#assetDetailModal").modal("hide");
+                                        `Page ${response.pagination.current_page} of ${response.pagination.last_page} `;
+                                    if (response.pagination.next_page_url) {
+                                        paginationLinks +=
+                                            `<button class="btn btn-sm btn-secondary" onclick="loadAssetReturns(${response.pagination.current_page + 1}, ${assetId})">Next</button>`;
+                                    }
+                                    $("#paginationLinks").html(paginationLinks);
                                 },
                                 error: function() {
-                                    alert("Failed to delete the record.");
+                                    alert("Error loading asset return data.");
                                 }
                             });
                         }
-                    });
-                });
 
+                        // Delete Asset Return Record
+                        $(document).on("click", ".delete-return", function() {
+                            let returnId = $(this).data("id");
 
-                // sdjgjf
-                document.getElementById('filterLocation').addEventListener('change', function() {
-                    updateFilters();
-                });
-
-                document.getElementById('filterUser').addEventListener('change', function() {
-                    updateFilters();
-                });
-
-                document.getElementById('searchBy').addEventListener('keyup', function() {
-                    updateFilters();
-                });
-
-                function updateFilters() {
-                    let location_id = document.getElementById('filterLocation').value;
-                    let user_id = document.getElementById('filterUser').value;
-                    let search = document.getElementById('searchBy').value;
-
-                    let params = new URLSearchParams(window.location.search);
-                    if (location_id) {
-                        params.set('location_id', location_id);
-                    } else {
-                        params.delete('location_id');
-                    }
-                    if (user_id) {
-                        params.set('user_id', user_id);
-                    } else {
-                        params.delete('user_id');
-                    }
-                    if (search) {
-                        params.set('search', search);
-                    } else {
-                        params.delete('search');
-                    }
-
-                    window.location.search = params.toString();
-                }
-            </script>
-
-            <script>
-                $(document).ready(function() {
-                    // Open modal and fetch users
-                    $('.lentToBtn').click(function() {
-                        let assetId = $(this).data('id'); // Get asset ID from button
-                        $('.asset_id').val(assetId); // Set asset ID in hidden input field
-
-                        // Fetch users dynamically from database
-                        $.get('/lent-assets/users', function(data) {
-                            let userDropdown = $('#user_id');
-                            userDropdown.empty().append('<option value="">Select User...</option>');
-                            data.forEach(user => {
-                                userDropdown.append(
-                                    `<option value="${user.id}">${user.name}</option>`);
-                            });
-                        });
-
-                        $('#lentToModal').modal('show'); // Show modal
-                    });
-
-                    // Submit form via AJAX
-                    $('#lentAssetForm').submit(function(e) {
-                        e.preventDefault();
-                        $.ajax({
-                            url: '/lent-assets/store',
-                            type: 'POST',
-                            data: $(this).serialize(),
-                            success: function(response) {
-                                alert(response.message);
-                                $('#lentToModal').modal('hide');
-                                location.reload(); // Refresh the table
-                            },
-                            error: function(xhr) {
-
-                                alert('Error: ' + (xhr.responseJSON ? xhr.responseJSON.message :
-                                    'Unknown error'));
+                            if (confirm("Are you sure you want to delete this record?")) {
+                                $.ajax({
+                                    url: `/asset-returns/${returnId}`,
+                                    type: "DELETE",
+                                    success: function() {
+                                        alert("Record deleted successfully.");
+                                        $("#assetDetailModal").modal("hide");
+                                    },
+                                    error: function() {
+                                        alert("Failed to delete the record.");
+                                    }
+                                });
                             }
                         });
                     });
-                });
 
 
-
-
-                // Handle Status Button Click
-                $(".status-btn").click(function() {
-                    $(".status-btn").removeClass("active");
-                    $(this).addClass("active");
-                    $("#status").val($(this).data("status"));
-                });
-
-                // asset type
-                document.addEventListener('DOMContentLoaded', function() {
-                    // Initialize Bootstrap modals
-                    const addAssetTypeModal = new bootstrap.Modal(document.getElementById('addAssetTypeModal'));
-                    const editAssetTypeModal = new bootstrap.Modal(document.getElementById('editAssetTypeModal'));
-
-                    // Form elements for asset type creation and editing
-                    const addAssetTypeForm = document.getElementById('addAssetTypeForm');
-                    const editAssetTypeForm = document.getElementById('editAssetTypeForm');
-
-                    // Fields inside Edit Asset Type Modal
-                    const editAssetTypeName = document.getElementById('editAssetTypeName');
-                    const editAssetId = document.getElementById('editAssetId');
-                    const updateAssetTypeBtn = document.getElementById('updateAssetTypeBtn');
-
-                    // Open Edit Modal and populate data
-                    document.querySelectorAll('.edit-asset-type-btn').forEach(button => {
-                        button.addEventListener('click', function() {
-                            let assetRow = this.closest('tr');
-                            let assetId = assetRow.querySelector('.checkbox-item').value;
-                            let assetName = assetRow.querySelector('td:nth-child(2)').innerText.trim();
-
-                            editAssetId.value = assetId;
-                            editAssetTypeName.value = assetName;
-                            editAssetTypeForm.action = `/assettypes/${assetId}`;
-
-                            editAssetTypeModal.show(); // Open modal
-                        });
+                    // sdjgjf
+                    document.getElementById('filterLocation').addEventListener('change', function() {
+                        updateFilters();
                     });
 
+                    document.getElementById('filterUser').addEventListener('change', function() {
+                        updateFilters();
+                    });
 
+                    document.getElementById('searchBy').addEventListener('keyup', function() {
+                        updateFilters();
+                    });
+
+                    function updateFilters() {
+                        let location_id = document.getElementById('filterLocation').value;
+                        let user_id = document.getElementById('filterUser').value;
+                        let search = document.getElementById('searchBy').value;
+
+                        let params = new URLSearchParams(window.location.search);
+                        if (location_id) {
+                            params.set('location_id', location_id);
+                        } else {
+                            params.delete('location_id');
+                        }
+                        if (user_id) {
+                            params.set('user_id', user_id);
+                        } else {
+                            params.delete('user_id');
+                        }
+                        if (search) {
+                            params.set('search', search);
+                        } else {
+                            params.delete('search');
+                        }
+
+                        window.location.search = params.toString();
+                    }
+                </script>
+
+                <script>
                     $(document).ready(function() {
-                        $('#addAssetTypeForm').submit(function(e) {
-                            e.preventDefault(); // Prevent default form submission
+                        // Open modal and fetch users
+                        $('.lentToBtn').click(function() {
+                            let assetId = $(this).data('id'); // Get asset ID from button
+                            $('.asset_id').val(assetId); // Set asset ID in hidden input field
 
-                            let formData = $(this).serialize(); // Serialize form data
+                            // Fetch users dynamically from database
+                            $.get('/lent-assets/users', function(data) {
+                                let userDropdown = $('#user_id');
+                                userDropdown.empty().append('<option value="">Select User...</option>');
+                                data.forEach(user => {
+                                    userDropdown.append(
+                                        `<option value="${user.id}">${user.name}</option>`);
+                                });
+                            });
 
+                            $('#lentToModal').modal('show'); // Show modal
+                        });
+
+                        // Submit form via AJAX
+                        $('#lentAssetForm').submit(function(e) {
+                            e.preventDefault();
                             $.ajax({
-                                url: "{{ route('assettypes.store') }}",
-                                type: "POST",
-                                data: formData,
+                                url: '/lent-assets/store',
+                                type: 'POST',
+                                data: $(this).serialize(),
                                 success: function(response) {
-                                    if (response.success) {
-                                        // Append new asset type to the dropdown
-                                        $('select[name="asset_type_id"]').append(
-                                            `<option value="${response.asset_type.id}" selected>${response.asset_type.name}</option>`
-                                        );
-
-                                        // Show success message
-                                        alert('Asset Type Added Successfully!');
-
-                                        // Reset form and close modal
-                                        $('#addAssetTypeForm')[0].reset();
-                                        $('#addAssetTypeModal').modal('hide');
-                                    } else {
-                                        alert('Error: ' + response.message);
-                                    }
+                                    alert(response.message);
+                                    $('#lentToModal').modal('hide');
+                                    location.reload(); // Refresh the table
                                 },
                                 error: function(xhr) {
-                                    alert('Failed to add asset type. Please try again.');
+
+                                    alert('Error: ' + (xhr.responseJSON ? xhr.responseJSON.message :
+                                        'Unknown error'));
                                 }
                             });
                         });
                     });
-                    // location
-                    $(document).ready(function() {
-                        $('#addLocationForm').submit(function(e) {
-                            e.preventDefault();
 
-                            let formData = $(this).serialize();
 
-                            $.ajax({
-                                url: "{{ route('locations.store') }}",
-                                type: "POST",
-                                data: formData,
-                                success: function(response) {
-                                    if (response.success) {
-                                        // Append new location to dropdown
-                                        $('select[name="location_id"]').append(
-                                            `<option value="${response.location.id}" selected>${response.location.name}</option>`
-                                        );
 
-                                        alert('Location Added Successfully!');
 
-                                        // Reset form & close modal
-                                        $('#addLocationForm')[0].reset();
-                                        $('#addLocationModal').modal('hide');
-                                    } else {
-                                        alert('Error: ' + response.message);
+                    // Handle Status Button Click
+                    $(".status-btn").click(function() {
+                        $(".status-btn").removeClass("active");
+                        $(this).addClass("active");
+                        $("#status").val($(this).data("status"));
+                    });
+
+                    // asset type
+                    document.addEventListener('DOMContentLoaded', function() {
+                        // Initialize Bootstrap modals
+                        const addAssetTypeModal = new bootstrap.Modal(document.getElementById('addAssetTypeModal'));
+                        const editAssetTypeModal = new bootstrap.Modal(document.getElementById('editAssetTypeModal'));
+
+                        // Form elements for asset type creation and editing
+                        const addAssetTypeForm = document.getElementById('addAssetTypeForm');
+                        const editAssetTypeForm = document.getElementById('editAssetTypeForm');
+
+                        // Fields inside Edit Asset Type Modal
+                        const editAssetTypeName = document.getElementById('editAssetTypeName');
+                        const editAssetId = document.getElementById('editAssetId');
+                        const updateAssetTypeBtn = document.getElementById('updateAssetTypeBtn');
+
+                        // Open Edit Modal and populate data
+                        document.querySelectorAll('.edit-asset-type-btn').forEach(button => {
+                            button.addEventListener('click', function() {
+                                let assetRow = this.closest('tr');
+                                let assetId = assetRow.querySelector('.checkbox-item').value;
+                                let assetName = assetRow.querySelector('td:nth-child(2)').innerText.trim();
+
+                                editAssetId.value = assetId;
+                                editAssetTypeName.value = assetName;
+                                editAssetTypeForm.action = `/assettypes/${assetId}`;
+
+                                editAssetTypeModal.show(); // Open modal
+                            });
+                        });
+
+
+                        $(document).ready(function() {
+                            $('#addAssetTypeForm').submit(function(e) {
+                                e.preventDefault(); // Prevent default form submission
+
+                                let formData = $(this).serialize(); // Serialize form data
+
+                                $.ajax({
+                                    url: "{{ route('assettypes.store') }}",
+                                    type: "POST",
+                                    data: formData,
+                                    success: function(response) {
+                                        if (response.success) {
+                                            // Append new asset type to the dropdown
+                                            $('select[name="asset_type_id"]').append(
+                                                `<option value="${response.asset_type.id}" selected>${response.asset_type.name}</option>`
+                                            );
+
+                                            // Show success message
+                                            alert('Asset Type Added Successfully!');
+
+                                            // Reset form and close modal
+                                            $('#addAssetTypeForm')[0].reset();
+                                            $('#addAssetTypeModal').modal('hide');
+                                        } else {
+                                            alert('Error: ' + response.message);
+                                        }
+                                    },
+                                    error: function(xhr) {
+                                        alert('Failed to add asset type. Please try again.');
                                     }
-                                },
-                                error: function() {
-                                    alert('Failed to add location. Please try again.');
-                                }
+                                });
                             });
                         });
+                        // location
+                        $(document).ready(function() {
+                            $('#addLocationForm').submit(function(e) {
+                                e.preventDefault();
+
+                                let formData = $(this).serialize();
+
+                                $.ajax({
+                                    url: "{{ route('locations.store') }}",
+                                    type: "POST",
+                                    data: formData,
+                                    success: function(response) {
+                                        if (response.success) {
+                                            // Append new location to dropdown
+                                            $('select[name="location_id"]').append(
+                                                `<option value="${response.location.id}" selected>${response.location.name}</option>`
+                                            );
+
+                                            alert('Location Added Successfully!');
+
+                                            // Reset form & close modal
+                                            $('#addLocationForm')[0].reset();
+                                            $('#addLocationModal').modal('hide');
+                                        } else {
+                                            alert('Error: ' + response.message);
+                                        }
+                                    },
+                                    error: function() {
+                                        alert('Failed to add location. Please try again.');
+                                    }
+                                });
+                            });
+                        });
+                        // Handle update asset type
+                        updateAssetTypeBtn.addEventListener('click', function() {
+                            if (editAssetTypeName.value.trim() === '') {
+                                alert('Asset Name cannot be empty!');
+                                return;
+                            }
+                            editAssetTypeForm.submit(); // Submit form
+                        });
+
+                        // Auto-refresh asset type dropdown after adding a new asset type
+                        addAssetTypeForm.addEventListener('submit', function(event) {
+                            event.preventDefault();
+                            let formData = new FormData(addAssetTypeForm);
+
+                            fetch(addAssetTypeForm.action, {
+                                    method: 'POST',
+                                    body: formData,
+                                    headers: {
+                                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
+                                            .getAttribute('content')
+                                    }
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.success) {
+                                        let assetTypeDropdown = document.querySelector(
+                                            'select[name="asset_type_id"]');
+                                        let newOption = new Option(data.asset_type.name, data.asset_type.id, true,
+                                            true);
+                                        assetTypeDropdown.appendChild(newOption);
+                                        addAssetTypeModal.hide();
+                                        addAssetTypeForm.reset();
+                                    } else {
+                                        alert('Failed to add asset type. Please try again.');
+                                    }
+                                })
+                                .catch(error => console.error('Error:', error));
+                        });
+
                     });
-                    // Handle update asset type
-                    updateAssetTypeBtn.addEventListener('click', function() {
-                        if (editAssetTypeName.value.trim() === '') {
-                            alert('Asset Name cannot be empty!');
-                            return;
-                        }
-                        editAssetTypeForm.submit(); // Submit form
-                    });
-
-                    // Auto-refresh asset type dropdown after adding a new asset type
-                    addAssetTypeForm.addEventListener('submit', function(event) {
-                        event.preventDefault();
-                        let formData = new FormData(addAssetTypeForm);
-
-                        fetch(addAssetTypeForm.action, {
-                                method: 'POST',
-                                body: formData,
-                                headers: {
-                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
-                                        .getAttribute('content')
-                                }
-                            })
-                            .then(response => response.json())
-                            .then(data => {
-                                if (data.success) {
-                                    let assetTypeDropdown = document.querySelector(
-                                        'select[name="asset_type_id"]');
-                                    let newOption = new Option(data.asset_type.name, data.asset_type.id, true,
-                                        true);
-                                    assetTypeDropdown.appendChild(newOption);
-                                    addAssetTypeModal.hide();
-                                    addAssetTypeForm.reset();
-                                } else {
-                                    alert('Failed to add asset type. Please try again.');
-                                }
-                            })
-                            .catch(error => console.error('Error:', error));
-                    });
-
-                });
-            </script>
+                </script>
 
 
-        @endsection
+            @endsection

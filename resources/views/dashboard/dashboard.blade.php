@@ -690,12 +690,12 @@
                     </div>
 
                     <div class="col">
-                        <a href="{{ route('employees.list.inactive') }}" class="text-decoration-none">
+                        <a href="{{ route('month.exit') }}" class="text-decoration-none">
                             <div class="dashboard-tile bg-c-green">
                                 <div class="dashboard-icon"><i class="fa fa-sign-out"></i></div>
                                 <div>
                                     <h6>This month exit</h6>
-                                    <div class="dashboard-count">0</div>
+                                    <div class="dashboard-count">{{$exit_employee_Count ?? 0}}</div>
                                 </div>
                             </div>
                         </a>
@@ -885,8 +885,8 @@
                                 <div class="dashboard-icon"><i class="fa fa-sign-out"></i></div>
                                 <div>
                                     <h6>Exit Employees</h6>
-                                    <div class="dashboard-count">0</div>
-                                    <div style="font-size:13px;">This month exit: 0</div>
+                                    <div class="dashboard-count">{{$exit_employee_Count ?? 0}}</div>
+                                    <div style="font-size:13px;">Total Exit Employee's: {{$exit_employee_Count ?? 0}}</div>
                                 </div>
                             </div>
                         </a>

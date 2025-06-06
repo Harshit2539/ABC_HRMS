@@ -14,18 +14,31 @@
                 <div class="card-title mb-0">
                     <h3 id="all" class="main-heading">Asset Types<span>Let's Create Assets ?</span></h3>
                 </div>
-                @if (session('success'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">&times;</button>
-                    </div>
-                @endif
+
                 <div class="d-flex align-items-center">
                     <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#addAssetModal">
                         + Add New Asset Type
                     </button>
                 </div>
             </div>
+
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert" id="success-alert">
+                    {{ session('success') }}
+                </div>
+
+                <script>
+                    setTimeout(function() {
+                        let alert = document.getElementById('success-alert');
+                        if (alert) {
+                            alert.classList.remove('show');
+                            alert.classList.add('fade');
+                            setTimeout(() => alert.remove(), 500);
+                        }
+                    }, 2000);
+                </script>
+            @endif
+
 
 
             <div class="card">
@@ -44,41 +57,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Edit Asset Type Modal -->
-    <div class="modal fade" id="editAssetTypeModal" tabindex="-1" aria-labelledby="editAssetTypeLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editAssetTypeLabel">Edit Asset Type</h5>
-                    <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
-                    </button>
-                </div>
-                <div class="modal-body">
-
-                    <!-- Update Form -->
-                    <form id="editAssetTypeForm" method="POST">
-                        @csrf
-                        @method('POST')
-                        <input type="hidden" id="editAssetId" name="id">
-                        <div class="mb-3">
-                            <label for="editAssetTypeName" class="form-label">
-                                <span class="text-danger">*</span> Name
-                            </label>
-                            <input type="text" class="form-control" id="editAssetTypeName" name="name" required>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="updateAssetTypeBtn" class="btn btn-danger d-flex align-items-center">
-                        <i class="fa fa-save me-2"></i> Update
-                    </button>
-                    <button type="button" class="btn btn-light border" data-bs-dismiss="modal">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Add Asset Type Modal -->
     <div class="modal fade" id="addAssetModal" tabindex="-1" aria-labelledby="addAssetLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -108,37 +86,43 @@
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const editAssetTypeModalEl = document.getElementById('editAssetTypeModal');
-            const editAssetTypeModal = new bootstrap.Modal(editAssetTypeModalEl);
-            const editAssetTypeName = document.getElementById('editAssetTypeName');
-            const editAssetId = document.getElementById('editAssetId');
-            const updateAssetTypeBtn = document.getElementById('updateAssetTypeBtn');
-            const editAssetTypeForm = document.getElementById('editAssetTypeForm');
 
-            document.querySelectorAll('.editAssetTypeBtn').forEach(button => {
-                button.addEventListener('click', function() {
-                    const assetId = this.getAttribute('$asset->id');
-                    const assetName = this.getAttribute('$asset->name');
 
-                    editAssetId.value = assetId;
-                    editAssetTypeName.value = assetName;
 
-                    // Update the form action dynamically
-                    editAssetTypeForm.action = `/assettypes/${assetId}`;
-                });
-            });
+    <!-- Edit Asset Type Modal -->
+    <div class="modal fade" id="editAssetTypeModal" tabindex="-1" aria-labelledby="editAssetTypeLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="editAssetTypeForm" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Asset Type</h5>
+                        <button type="button" class="btn btn-close" data-bs-dismiss="modal"
+                            aria-label="Close">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="editAssetId" name="id">
+                        <div class="mb-3">
+                            <label for="editAssetTypeName" class="form-label">
+                                <span class="text-danger">*</span> Name
+                            </label>
+                            <input type="text" class="form-control" id="editAssetTypeName" name="name" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fa fa-save me-2"></i> Update
+                        </button>
+                        <button type="button" class="btn btn-light border" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
-            updateAssetTypeBtn.addEventListener('click', function() {
-                if (editAssetTypeName.value.trim() === '') {
-                    alert('Asset Name cannot be empty!');
-                    return;
-                }
-                editAssetTypeForm.submit();
-            });
-        });
-    </script>
+
+
     <script src="https://cdn.datatables.net/2.0.5/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.5/js/dataTables.bootstrap4.js"></script>
     <script src="https://cdn.datatables.net/2.0.5/js/dataTables.bootstrap4.js"></script>
@@ -179,6 +163,26 @@
                     className: "text-center",
                 },
             ],
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const editAssetTypeModalEl = document.getElementById('editAssetTypeModal');
+            const editAssetTypeName = document.getElementById('editAssetTypeName');
+            const editAssetId = document.getElementById('editAssetId');
+            const editForm = document.getElementById('editAssetTypeForm');
+
+            $(document).on('click', '.editAssetTypeBtn', function() {
+                const assetId = $(this).data('id');
+                const assetName = $(this).data('name');
+
+                editAssetTypeName.value = assetName;
+                editAssetId.value = assetId;
+
+                // Update form action dynamically
+                editForm.action = `/assettypes/${assetId}`;
+            });
         });
     </script>
 @endsection
